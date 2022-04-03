@@ -204,6 +204,16 @@ namespace AIS
                     new_tit.fitness = function(new_tit.coords[0], new_tit.coords[1], this.f);
                 }
 
+                //проверка выхода за границы
+                for (int i = 0; i < dim; i++)
+                {
+                    if (new_tit.coords[i] < D[i, 0])
+                        new_tit.coords[i] = D[i, 0];
+
+                    if (new_tit.coords[i] > D[i, 1])
+                        new_tit.coords[i] = D[i, 1];
+                }
+
                 search.Add(new_tit);   //x^j,k (l)
                 current_tit = new_tit;
             }
