@@ -12,38 +12,31 @@ namespace AIS
     {
         //Мое
 
-        private AlgorithmPerch algPerch;
+        private AlgorithmTit algTit;
 
         private int MaxIteration = 0;
-        private Perch resultBest;
+        private Tit resultBest;
         private double[,] obl = new double[2, 2];
 
         List<Vector> exactPoints = new List<Vector>();
 
-        /// <summary>Количество стай</summary>
-        public int NumFlocks = 0;
-        /// <summary>Количество окуней в стае</summary>
-        public int NumPerchInFlock = 0;
-        /// <summary>Количество шагов до окончания движения внутри стаи</summary>
-        public int NStep = 0;
-        /// <summary>Глубина продвижения внутри котла</summary>
-        public double sigma = 0;
-
-        public int functionCount = 0;
-        public ulong functionCallsAverage = 0;
-
-        /// <summary>Параметр распределения Леви</summary>
-        public double lambda = 0;
-        /// <summary>Величина шага</summary>
-        public double alfa = 0;
-
-        /// <summary>Число перекоммутаций</summary>
-        public int PRmax = 0;
-        /// <summary>Число шагов при перекоммутации</summary>
-        public int deltapr = 0;
-
-        //private int population = 0;
-        public int population = 0;
+        int NP;
+        double alpha;
+        double gamma;
+        double lambda;
+        double eta;
+        double rho;
+        double c1;
+        double c2;
+        double c3;
+        double K;
+        double h;
+        double L;
+        double P;
+        double mu;
+        double eps;
+        double[,] D;
+        
 
         //Не мое
         private bool[] flines = new bool[8];
@@ -82,24 +75,53 @@ namespace AIS
             dataGridView1.Rows[0].Cells[0].Value = "x";
             dataGridView1.Rows[1].Cells[0].Value = "y";
 
-            dataGridView2.RowCount = 6;
-            dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения";
+            dataGridView2.RowCount = 15;
+            dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Maximum iteration count";// "Максимальное количество итераций";
-            dataGridView2.Rows[1].Cells[1].Value = 4;
+            dataGridView2.Rows[1].Cells[0].Value = "Альфа";// "Максимальное количество итераций";
+            dataGridView2.Rows[1].Cells[1].Value = 0.0001.ToString();
 
-            dataGridView2.Rows[2].Cells[0].Value = "Number of flocks";//"Количество стай"; 
-            dataGridView2.Rows[2].Cells[1].Value = 4;
+            dataGridView2.Rows[2].Cells[0].Value = "Гамма";//"Количество стай"; 
+            dataGridView2.Rows[2].Cells[1].Value = 0.75.ToString();
 
-            dataGridView2.Rows[3].Cells[0].Value = "Number of perches";//"Количество окуней в стае";
-            dataGridView2.Rows[3].Cells[1].Value = 3;
+            dataGridView2.Rows[3].Cells[0].Value = "эта";//"Количество окуней в стае";
+            dataGridView2.Rows[3].Cells[1].Value = 0.9.ToString();
 
-            dataGridView2.Rows[4].Cells[0].Value = "Число перекоммутаций";
-            dataGridView2.Rows[4].Cells[1].Value = 10;
+            dataGridView2.Rows[4].Cells[0].Value = "Лямбда";
+            dataGridView2.Rows[4].Cells[1].Value = 1.5.ToString();
 
-            dataGridView2.Rows[5].Cells[0].Value = "Число шагов в перекоммутации";
-            dataGridView2.Rows[5].Cells[1].Value = 5;
+            dataGridView2.Rows[5].Cells[0].Value = "Радиус окрестности ро";
+            dataGridView2.Rows[5].Cells[1].Value = 5;   //  1/5*(min(b_i-a_i))
+
+            dataGridView2.Rows[6].Cells[0].Value = "c1";
+            dataGridView2.Rows[6].Cells[1].Value = 5;
+
+            dataGridView2.Rows[7].Cells[0].Value = "c2";
+            dataGridView2.Rows[7].Cells[1].Value = 5;
+
+            dataGridView2.Rows[8].Cells[0].Value = "c3";
+            dataGridView2.Rows[8].Cells[1].Value = 5;
+
+            dataGridView2.Rows[9].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[9].Cells[1].Value = 10;
+
+            dataGridView2.Rows[10].Cells[0].Value = "h";
+            dataGridView2.Rows[10].Cells[1].Value = 0.1.ToString();
+
+            dataGridView2.Rows[11].Cells[0].Value = "L";
+            dataGridView2.Rows[11].Cells[1].Value = 10;
+
+            dataGridView2.Rows[12].Cells[0].Value = "P";
+            dataGridView2.Rows[12].Cells[1].Value = 30;
+
+            dataGridView2.Rows[13].Cells[0].Value = "mu";
+            dataGridView2.Rows[13].Cells[1].Value = 5;
+
+            dataGridView2.Rows[14].Cells[0].Value = "eps";
+            dataGridView2.Rows[14].Cells[1].Value = 0.000000001.ToString();
+
+            //СТАРОЕ
 
             dataGridView3.RowCount = 4;
             dataGridView3.Rows[0].Cells[0].Value = "x";
@@ -129,21 +151,26 @@ namespace AIS
                     obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                     obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-                    NStep           =   Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                    MaxIteration    =   Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
+                    NP       = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                    alpha    = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
+                    gamma    = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
+                    lambda   = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
+                    eta      = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+                    rho      = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
+                    c1       = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
+                    c2       = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
+                    c3       = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
+                    K        = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
+                    h        = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
+                    L        = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
+                    P        = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
+                    mu       = Convert.ToDouble(dataGridView2.Rows[13].Cells[1].Value);
 
-                    NumFlocks       =   Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
-                    NumPerchInFlock =   Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+                    eps      = 0.0000001;
 
-                    lambda          =   Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-                    alfa            =   Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+                    algTit = new AlgorithmTit();
 
-                    PRmax           =   Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
-                    deltapr         =   Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-
-                    algPerch = new AlgorithmPerch();
-
-                    resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
+                    resultBest = algTit.StartAlg(NP, alpha, gamma, lambda, eta, rho, c1, c2, c3, K, h, L, P, mu, eps, obl, z);
                     flag2 = true;
 
 
@@ -494,20 +521,9 @@ namespace AIS
                         //Отрисовка результата работы алгоритма
                         if (flag2 == true)
                         {
-                            //for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                            //    e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                            for (int i = 0; i < algTit.Pool.Count; i++) // раскраска лучших окуней
+                                e.Graphics.FillEllipse(Brushes.Red, (float)((algTit.Pool[i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algTit.Pool[i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
-                            for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                                e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                            for (int j = 1; j < NumFlocks-1; j++) // раскраска остальных окуней
-                            {
-
-                                for (int i = 0; i < NumPerchInFlock; i++)
-                                    e.Graphics.FillEllipse(Brushes.Blue, (float)((algPerch.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                            }
-
-                            for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                                e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                     //e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algPerch.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
                 }
@@ -611,20 +627,24 @@ namespace AIS
             obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
             obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-            NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-            MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
+            NP = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+            alpha = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+            gamma = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+            lambda = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+            eta = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+            rho = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+            c1 = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
+            c2 = Convert.ToInt32(dataGridView2.Rows[7].Cells[1].Value);
+            c3 = Convert.ToInt32(dataGridView2.Rows[8].Cells[1].Value);
+            K = Convert.ToInt32(dataGridView2.Rows[9].Cells[1].Value);
+            h = Convert.ToInt32(dataGridView2.Rows[10].Cells[1].Value);
+            L = Convert.ToInt32(dataGridView2.Rows[11].Cells[1].Value);
+            P = Convert.ToInt32(dataGridView2.Rows[12].Cells[1].Value);
+            mu = Convert.ToInt32(dataGridView2.Rows[13].Cells[1].Value);
 
-            NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
-            NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-            population      = NumFlocks * NumPerchInFlock;
-            
-            lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-            alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+            eps = 0.0000001;
 
-            PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
-            deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-           
-            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr, exact)
+            FormStepTit formPerch = new FormStepTit(comboBox1.SelectedIndex, obl, NP, alpha, gamma, lambda, eta, rho, c1, c2, c3, K, h, L, P, mu, eps, exact)
             {
                 flines = flines,
                 showobl = showobl,
@@ -636,97 +656,97 @@ namespace AIS
 
         private void button2_Click(object sender, EventArgs e)
         {
-            {
-                if (dataGridView1.Rows[0].Cells[1].Value != null &&
-                    dataGridView1.Rows[0].Cells[2].Value != null &&
-                    dataGridView1.Rows[1].Cells[1].Value != null &&
-                    dataGridView1.Rows[1].Cells[2].Value != null)
-                {
-                    if (comboBox1.SelectedIndex != -1)
-                    {
-                        obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
-                        obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
-                        obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
-                        obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
-
-
-                        functionCallsAverage = 0;
-                        for (int p = 0; p < 1; p++)
-                        {
-
-
-                            List<double> averFuncDeviation = new List<double>();
-                            double minDeviation = 0;
-                            int successCount = 0;
-                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
-                            double averDer = 0;
-                            double normalDerivation = 0;
-                            int z = comboBox1.SelectedIndex;
-
-                            NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                            MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
-
-                            NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
-                            NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-                            population      = NumFlocks * NumPerchInFlock;
-
-                            PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
-                            deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-
-                            lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-                            alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
-
-                            for (int i = 0; i < 1000; i++)
-                            {
-                                algPerch = new AlgorithmPerch();
-
-                                Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
-                                functionCallsAverage += algPerch.functionCalls;
-
-                                foreach (Vector item in exactPoints)
-                                {
-                                    if ((Math.Abs(result.coords[0] - item[0]) < eps) && (Math.Abs(result.coords[1] - item[1]) < eps))
-                                    {
-                                        successCount++;
-                                        break;
-                                    }
-                                }
-
-                                averFuncDeviation.Add(Math.Abs(result.fitness - exact));
-                            }
-                            Console.WriteLine(functionCallsAverage / 1000);
-
-                            double deltaSum = 0;
-                            for (int i = 0; i < 1000; i++)
-                                deltaSum += averFuncDeviation[i];
-
-                            // СК отлонение?
-                            averDer = deltaSum / 1000f;
-
-                            averFuncDeviation.Sort();/////////////////////////////////////////////////
-                            minDeviation = averFuncDeviation[0];
-
-                            double dispersion = 0;
-                            for (int i = 0; i < 1000; i++)
-                                dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
-                            normalDerivation = Math.Sqrt((dispersion / 1000f));
-
-                            FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
-                            StreamWriter r = new StreamWriter(fs);
-                            r.Write(String.Format(@"|{0, 5}    |  {1, 6}     |{2, 5}   |    {3, 5}        |{4, 5}     |{5, 5}  |{6, 5}  |{7, 4}   |  {8,5:f3} | {9,5:f3} |    {10, 14:f6}            |{11, 17:f6}       |{12, 15:f6}        |{13, 7}     |  
-|---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", z + 1, population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
-                            r.Write("\r\n");
-
-                            r.Close();
-
-                            fs.Close();
-                        }
-                        Process.Start("protocol.txt");
-                    }
-                }
-                else
-                    MessageBox.Show("Введите корректные параметры", "Ошибка при запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            //{
+            //    if (dataGridView1.Rows[0].Cells[1].Value != null &&
+            //        dataGridView1.Rows[0].Cells[2].Value != null &&
+            //        dataGridView1.Rows[1].Cells[1].Value != null &&
+            //        dataGridView1.Rows[1].Cells[2].Value != null)
+            //    {
+            //        if (comboBox1.SelectedIndex != -1)
+            //        {
+            //            obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
+            //            obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
+            //            obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
+            //            obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
+            //
+            //
+            //            functionCallsAverage = 0;
+            //            for (int p = 0; p < 1; p++)
+            //            {
+            //
+            //
+            //                List<double> averFuncDeviation = new List<double>();
+            //                double minDeviation = 0;
+            //                int successCount = 0;
+            //                double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
+            //                double averDer = 0;
+            //                double normalDerivation = 0;
+            //                int z = comboBox1.SelectedIndex;
+            //
+            //                NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+            //                MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
+            //
+            //                NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+            //                NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+            //                population      = NumFlocks * NumPerchInFlock;
+            //
+            //                PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+            //                deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+            //
+            //                lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+            //                alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+            //
+            //                for (int i = 0; i < 1000; i++)
+            //                {
+            //                    algPerch = new AlgorithmPerch();
+            //
+            //                    Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
+            //                    functionCallsAverage += algPerch.functionCalls;
+            //
+            //                    foreach (Vector item in exactPoints)
+            //                    {
+            //                        if ((Math.Abs(result.coords[0] - item[0]) < eps) && (Math.Abs(result.coords[1] - item[1]) < eps))
+            //                        {
+            //                            successCount++;
+            //                            break;
+            //                        }
+            //                    }
+            //
+            //                    averFuncDeviation.Add(Math.Abs(result.fitness - exact));
+            //                }
+            //                Console.WriteLine(functionCallsAverage / 1000);
+            //
+            //                double deltaSum = 0;
+            //                for (int i = 0; i < 1000; i++)
+            //                    deltaSum += averFuncDeviation[i];
+            //
+            //                // СК отлонение?
+            //                averDer = deltaSum / 1000f;
+            //
+            //                averFuncDeviation.Sort();/////////////////////////////////////////////////
+            //                minDeviation = averFuncDeviation[0];
+            //
+            //                double dispersion = 0;
+            //                for (int i = 0; i < 1000; i++)
+            //                    dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
+            //                normalDerivation = Math.Sqrt((dispersion / 1000f));
+            //
+            //                FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
+            //                StreamWriter r = new StreamWriter(fs);
+            //                r.Write(String.Format(@"|{0, 5}    |  {1, 6}     |{2, 5}   |    {3, 5}        |{4, 5}     |{5, 5}  |{6, 5}  |{7, 4}   |  {8,5:f3} | {9,5:f3} |    {10, 14:f6}            |{11, 17:f6}       |{12, 15:f6}        |{13, 7}     |  
+//|---------+-//------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", z + 1, population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
+            //                r.Write("\r\n");
+            //
+            //                r.Close();
+            //
+            //                fs.Close();
+            //            }
+            //            Process.Start("protocol.txt");
+            //        }
+            //    }
+            //    else
+            //        MessageBox.Show("Введите корректные параметры", "Ошибка при запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
     }
 }

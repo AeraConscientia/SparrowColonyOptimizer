@@ -10,42 +10,47 @@ using System.Windows.Forms;
 
 namespace AIS
 {
-    public partial class FormStepPerch : Form
+    public partial class FormStepTit : Form
     {
-        public FormStepPerch(int z, double[,] obl, int MaxIteration, int NumFlocks, int NumPerchInFlock, int NStep, double lambda, double alfa, int PRmax, int deltapr, double exact)
+        public FormStepTit(int z, double[,] obl, int NP, double alpha, double gamma, double lambda, double eta, double rho, double c1, double c2, double c3,
+            double K, double h, double L, double P, double mu, double eps, double exact)
         {
             InitializeComponent();
 
             this.z = z;
             this.obl = obl;
-            this.MaxIteration = MaxIteration;
-
-            this.NumFlocks = NumFlocks;
-            this.NumPerchInFlock = NumPerchInFlock;
-            this.NStep = NStep;
-
+            this.NP = NP;
+            this.alpha = alpha;
+            this.gamma = gamma;
             this.lambda = lambda;
-            this.alfa = alfa;
-
-            this.PRmax = PRmax;
-            this.deltapr = deltapr;
-            int population = NumFlocks * NumPerchInFlock;
-            this.exact = exact;
+            this.eta = eta;
+            this.rho = rho;
+            this.c1 = c1;
+            this.c2 = c2;
+            this.c3 = c3;
+            this.K = K;
+            this.h = h;
+            this.L = L;
+            this.P = P;
+            this.mu = mu;
+            this.eps = eps;
         }
 
-        
-        int MaxIteration;
+        public int NP;
+        public double alpha;
+        public double gamma;
+        public double lambda;
+        public double eta;
+        public double rho;
+        public double c1, c2, c3;
+        public double K;
+        public double h;
+        public double L;
+        public double T;
+        public double P;
+        public double mu;
+        public double eps;
 
-        int NumFlocks;
-        int NumPerchInFlock;
-        int population;
-        int NStep;
-
-        double lambda;
-        double alfa;
-
-        int PRmax;
-        int deltapr;
 
         double exact;
 
@@ -61,7 +66,7 @@ namespace AIS
         public double[,] obl;
         public int stepsCount = 9; // TODO: Что это вообще?
 
-        public AlgorithmPerch algo = new AlgorithmPerch();
+        public AlgorithmTit algo = new AlgorithmTit();
 
         public double[,] showobl = new double[2, 2];
         
@@ -349,37 +354,7 @@ namespace AIS
                     else if (((f2 < a12) || (f3 < a12) || (f4 < a12) || (f5 < a12) || (f6 < a12) || (f7 < a12) || (f8 < a12) || (f9 < a12)) && (f > a12) && (flines[7] == true)) e.Graphics.FillRectangle(Brushes.MediumOrchid, (float)(ii), (float)(h - jj), 1, 1);
                 }
 
-            if (flag) 
-            {
-                if ((Red[1] == true) || (Red[2] == true) || (Red[3] == true))
-                {
-
-                    //for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                    //    e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-
-                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                        e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                    for (int j = 1; j < NumFlocks - 1; j++) // раскраска остальных окуней
-                    {
-
-                        for (int i = 0; i < NumPerchInFlock; i++)
-                            e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                    }
-
-                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                        e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                }
-                else
-                {
-                    if (algo.flock != null)
-                        for (int j = 0; j < NumFlocks; j++) // раскраска остальных окуней
-                            for (int i = 0; i < NumPerchInFlock; i++)
-                                e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                    else
-                        for (int i = 0; i < algo.individuals.Count; i++)
-                            e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                }
-            }
+           
 
             for (int i = -6; i < 12; i++)
             {
@@ -398,349 +373,6 @@ namespace AIS
             e.Graphics.DrawLine(p10, w - 5, h - a, w - 15, h - a + 5);
             e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
-
-        }
-
-        /// <summary>Создание начальной популяции</summary>
-        private void buttonInitialPopulation_Click(object sender, EventArgs e)
-        {
-            iterationGraph = 0;
-            this.chart1.Series[0].Points.Clear();
-            this.chart1.Series[1].Points.Clear();
-            if (!flag)
-            {
-                Red[0] = true;
-                for (int i = 1; i < stepsCount; i++)
-                    Red[i] = false;
-
-                flag = true;                   //Начало работы алгоритма
-
-                algo = new AlgorithmPerch 
-                {
-                    MaxCount = MaxIteration,
-                    NumFlocks = NumFlocks,
-                    NumPerchInFlock = NumPerchInFlock,
-                    population = NumFlocks * NumPerchInFlock,
-                    f = z,
-                    D = obl,
-                    NStep = NStep,
-                    lambda = lambda,
-                    alfa = alfa,
-                    PRmax = PRmax,
-                    deltapr = deltapr
-                };
-                algo.FormingPopulation();
-                buttonMakeFlocks.Enabled = true;
-                buttonInitialPopulation.Enabled = false;
-
-
-                pictureBox1.Refresh();
-                pictureBox2.Refresh();
-            }
-        }
-
-        /// <summary>Разбивка на стаи</summary>
-        private void buttonMakeFlocks_Click(object sender, EventArgs e)
-        {
-            Red[0] = false;
-            Red[1] = true;
-            Red[6] = false;
-            algo.MakeFlocks();
-
-            buttonMakeFlocks.Enabled = false;
-            buttonKettle.Enabled = true;
-
-            dataGridView3.RowCount = 1;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
-
-            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
-
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
-        }
-
-        /// <summary>Помещение лидера в множество Pool</summary>
-        private void buttonLeaderToPool_Click(object sender, EventArgs e)
-        {
-
-            Red[3] = false;
-            Red[4] = true;
-            this.buttonAnswer.Enabled = true;
-            button1.Enabled = true;
-
-            buttonLeaderToPool.Enabled = false;
-            buttonCheckEndConditions.Enabled = true;
-
-            pictureBox1.Refresh();
-        }
-
-        /// <summary>Реализация котлов</summary>
-        private void buttonKettle_Click(object sender, EventArgs e)
-        {
-
-            Red[1] = false;
-            Red[2] = true;
-            algo.MoveEPerchEFlock();
-
-            buttonFlocksSwim.Enabled = true;
-            buttonKettle.Enabled = false;
-
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
-        }
-
-        /// <summary>Плавание стай</summary>
-        private void buttonFlocksSwim_Click(object sender, EventArgs e)
-        {
-
-            Red[2] = false;
-            Red[3] = true;
-            algo.FlocksSwim();
-
-            algo.best = algo.flock[0, 0];
-            algo.bestFitness.Add(algo.best.fitness);
-            algo.AverageFitness();
-
-            buttonFlocksSwim.Enabled = false;
-            buttonLeaderToPool.Enabled = true;
-
-            //pictureBoxGraph.Refresh();
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
-            this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
-            this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
-            
-            algo.currentIteration++;
-            iterationGraph++;
-            this.numericUpDown1.Maximum = algo.MaxCount - algo.currentIteration;
-        }
-
-        /// <summary>Проверка условий окончания</summary>
-        private void buttonCheckEndConditions_Click(object sender, EventArgs e)
-        {
-            this.buttonAnswer.Enabled = false;
-            buttonCheckEndConditions.Enabled = false;
-            button1.Enabled = false;
-
-            if (algo.currentIteration < algo.MaxCount) 
-            {
-                Red[6] = true;
-                buttonMakeFlocks.Enabled = true;
-            }
-            else 
-            {
-                Red[7] = true;
-                buttonSearchInPool.Enabled = true;
-            }
-            Red[4] = false;
-            dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
-            dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
-            dataGridView3.Rows[3].Cells[0].Value = "f* average";
-            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
-
-            if (algo.currentIteration == algo.MaxCount)
-            {
-                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
-            }
-            else
-            {
-                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
-            }
-            dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
-            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
-            dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count-1]:F8}");
-            dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
-            pictureBox1.Refresh();
-        }
-
-        /// <summary>Поиск самого лучшего окуня</summary>
-        private void buttonSearchInPool_Click(object sender, EventArgs e)
-        {
-            if (Red[7] == true)
-            {
-                Red[7] = false;
-                Red[8] = true;
-            }
-
-            buttonSearchInPool.Enabled = false;
-            buttonChooseTheBest.Enabled = true;
-            algo.Recommutation();
-            pictureBox1.Refresh();
-            //pictureBox2.Refresh(); // вот зачем это тут было
-        }
-
-        /// <summary>Выбор самого лучшего окуня</summary>
-        private void buttonChooseTheBest_Click(object sender, EventArgs e)
-        {
-            if (Red[8] == true) 
-            {
-                pictureBox1.Refresh();
-                flag = false;
-
-
-                dataGridView3.RowCount = 3;
-                dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
-                dataGridView3.Rows[1].Cells[0].Value = "f*";
-                dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
-
-                dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.Pool[0].coords[0]:F4}, {algo.Pool[0].coords[1]:F4})");
-                dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.Pool[0].fitness:F8}");
-                dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
-
-                buttonChooseTheBest.Enabled = false;
-                buttonInitialPopulation.Enabled = true;
-            }
-        }
-
-        private void ChartGraph_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
-
-        private void buttonAnswer_Click(object sender, EventArgs e)
-        {
-            this.buttonAnswer.Enabled = false;
-            button1.Enabled = false;
-            buttonInitialPopulation.Enabled = true;
-            button1.Enabled = false;
-            for (int i = algo.currentIteration; i < algo.MaxCount; i++)
-            {
-                algo.MakeFlocks();
-                algo.MoveEPerchEFlock();
-                algo.FlocksSwim();
-                algo.currentIteration++;
-
-                algo.best = algo.flock[0, 0];
-                algo.bestFitness.Add(algo.best.fitness);
-                algo.AverageFitness();
-                this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
-                iterationGraph++;
-            }
-
-            buttonCheckEndConditions.Enabled = false;
-            Red[1] = true; Red[2] = true; Red[3] = true;
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
-
-            flag = false;
-
-            dataGridView3.RowCount = 3;
-            dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[1].Cells[0].Value = "f*";
-            dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
-
-            dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
-            dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
-            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
-
-            dataGridView3.Refresh();
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int tmp = algo.currentIteration;
-            bool tmpRed0, tmpRed1, tmpRed2, tmpRed3, tmpRed4, tmpRed5, tmpRed6, tmpRed7; // так сделано, потому что я запуталась, когда какое состояние
-            tmpRed0 = Red[0];
-            tmpRed1 = Red[1];
-            tmpRed2 = Red[2];
-            tmpRed3 = Red[3];
-            tmpRed4 = Red[4];
-            tmpRed5 = Red[5];
-            tmpRed6 = Red[6];
-            tmpRed7 = Red[7];
-
-
-            bool tmp2Flag = flag;
-            flag = true;
-            for (int i = algo.currentIteration; i < tmp + numericUpDown1.Value; i++)
-            {
-                //Red[1] = true; Red[2] = true; Red[3] = true;
-                if (algo.currentIteration == MaxIteration)
-                    break;
-                if (algo.currentIteration < algo.MaxCount)
-                {
-                    Red[6] = true;
-                    //buttonMakeFlocks.Enabled = true;
-                }
-                else
-                {
-                    Red[7] = true;
-                    //buttonSearchInPool.Enabled = true;
-                }
-                Red[4] = false;
-                Red[0] = false;
-                Red[1] = true;
-                Red[6] = false;
-                algo.MakeFlocks();
-                pictureBox2.Refresh();
-
-                Red[1] = false;
-                Red[2] = true;
-                algo.MoveEPerchEFlock();
-                pictureBox2.Refresh();
-
-                Red[2] = false;
-                Red[3] = true;
-                algo.FlocksSwim();
-                algo.currentIteration++;
-
-                algo.best = algo.flock[0, 0];
-                algo.bestFitness.Add(algo.best.fitness);
-                algo.AverageFitness();
-                pictureBox2.Refresh();
-
-                Red[3] = false;
-                Red[4] = true;
-
-                this.chart1.Series[0].Points.AddXY(iterationGraph+1, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph+1, algo.averageFitness[algo.averageFitness.Count - 1]);
-                iterationGraph++;
-                pictureBox1.Refresh();
-                //pictureBox2.Refresh();
-                
-            }
-            flag = tmp2Flag;
-            Red[0] = tmpRed0;
-            Red[1] = tmpRed1;
-            Red[2] = tmpRed2;
-            Red[3] = tmpRed3;
-            Red[4] = tmpRed4;
-            Red[5] = tmpRed5;
-            Red[6] = tmpRed6;
-            Red[7] = tmpRed7;
-            pictureBox1.Refresh();
-            //pictureBox2.Refresh();
-
-            //flag = false;
-
-            dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
-            dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
-            dataGridView3.Rows[3].Cells[0].Value = "f* average";
-            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
-
-
-            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
-            dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
-            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
-            dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
-            dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
-
-            dataGridView3.Refresh();
-            this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
-            if (numericUpDown1.Value < 0)
-            {
-                numericUpDown1.Value = 0;
-            }
-        }
-
-        private void FormStepPerch_Load(object sender, EventArgs e)
-        {
 
         }
     }

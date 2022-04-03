@@ -112,7 +112,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(6, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 16);
+            this.label1.Size = new System.Drawing.Size(152, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Вид целевой функции";
             // 
@@ -133,7 +133,7 @@
             "10. Параболическая функция"});
             this.comboBox1.Location = new System.Drawing.Point(6, 53);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(355, 24);
+            this.comboBox1.Size = new System.Drawing.Size(380, 24);
             this.comboBox1.TabIndex = 3;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -141,9 +141,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(3, 229);
+            this.label2.Location = new System.Drawing.Point(6, 215);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(223, 16);
+            this.label2.Size = new System.Drawing.Size(222, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Множество допустимых решений";
             // 
@@ -171,7 +171,7 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 250);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 234);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(184, 70);
@@ -217,7 +217,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(12, 20);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(367, 633);
+            this.groupBox1.Size = new System.Drawing.Size(392, 781);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Входные данные";
@@ -225,9 +225,9 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 535);
+            this.label7.Location = new System.Drawing.Point(6, 682);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(224, 16);
+            this.label7.Size = new System.Drawing.Size(223, 16);
             this.label7.TabIndex = 31;
             this.label7.Text = "Параметры распределения Леви";
             // 
@@ -249,11 +249,11 @@
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridView4.Location = new System.Drawing.Point(6, 554);
+            this.dataGridView4.Location = new System.Drawing.Point(6, 701);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView4.RowHeadersVisible = false;
-            this.dataGridView4.Size = new System.Drawing.Size(355, 71);
+            this.dataGridView4.Size = new System.Drawing.Size(375, 71);
             this.dataGridView4.TabIndex = 30;
             this.toolTip1.SetToolTip(this.dataGridView4, "нецелые значения через запятую");
             // 
@@ -283,7 +283,7 @@
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Location = new System.Drawing.Point(6, 83);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(355, 129);
+            this.pictureBox2.Size = new System.Drawing.Size(380, 129);
             this.pictureBox2.TabIndex = 7;
             this.pictureBox2.TabStop = false;
             // 
@@ -291,9 +291,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(3, 338);
+            this.label3.Location = new System.Drawing.Point(3, 325);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(156, 16);
+            this.label3.Size = new System.Drawing.Size(155, 16);
             this.label3.TabIndex = 29;
             this.label3.Text = "Параметры алгоритма";
             // 
@@ -316,12 +316,12 @@
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridView2.Location = new System.Drawing.Point(6, 357);
+            this.dataGridView2.Location = new System.Drawing.Point(6, 344);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView2.Size = new System.Drawing.Size(355, 159);
+            this.dataGridView2.Size = new System.Drawing.Size(375, 335);
             this.dataGridView2.TabIndex = 28;
             this.toolTip1.SetToolTip(this.dataGridView2, "нецелые значения через запятую");
             // 
@@ -418,7 +418,7 @@
             this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(1119, 619);
+            this.button5.Location = new System.Drawing.Point(1115, 767);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(169, 34);
             this.button5.TabIndex = 32;
@@ -431,7 +431,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 221);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(211, 16);
+            this.label4.Size = new System.Drawing.Size(210, 16);
             this.label4.TabIndex = 36;
             this.label4.Text = "Результаты работы алгоритма";
             // 
@@ -439,7 +439,7 @@
             // 
             this.groupBox2.Controls.Add(this.pictureBox3);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox2.Location = new System.Drawing.Point(398, 20);
+            this.groupBox2.Location = new System.Drawing.Point(410, 27);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(379, 224);
             this.groupBox2.TabIndex = 37;
@@ -465,9 +465,9 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.dataGridView3);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(398, 270);
+            this.groupBox3.Location = new System.Drawing.Point(410, 268);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(379, 383);
+            this.groupBox3.Size = new System.Drawing.Size(379, 533);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Работа алгоритма";
@@ -507,9 +507,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(799, 22);
+            this.label5.Location = new System.Drawing.Point(795, 37);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(338, 16);
+            this.label5.Size = new System.Drawing.Size(337, 16);
             this.label5.TabIndex = 38;
             this.label5.Text = "Изображение популяции и линий уровня функции";
             // 
@@ -519,7 +519,7 @@
             this.buttonHelp.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonHelp.Location = new System.Drawing.Point(799, 619);
+            this.buttonHelp.Location = new System.Drawing.Point(795, 767);
             this.buttonHelp.Name = "buttonHelp";
             this.buttonHelp.Size = new System.Drawing.Size(169, 34);
             this.buttonHelp.TabIndex = 39;
@@ -532,7 +532,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(799, 41);
+            this.pictureBox1.Location = new System.Drawing.Point(795, 56);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(492, 490);
             this.pictureBox1.TabIndex = 0;
@@ -544,7 +544,7 @@
             // 
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox4.Image = global::AIS.Properties.Resources.FlockColor2;
-            this.pictureBox4.Location = new System.Drawing.Point(799, 535);
+            this.pictureBox4.Location = new System.Drawing.Point(795, 550);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(489, 80);
             this.pictureBox4.TabIndex = 40;
@@ -554,7 +554,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1305, 665);
+            this.ClientSize = new System.Drawing.Size(1298, 804);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.label5);

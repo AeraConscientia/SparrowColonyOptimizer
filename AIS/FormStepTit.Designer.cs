@@ -1,6 +1,6 @@
 ﻿namespace AIS
 {
-    partial class FormStepPerch
+    partial class FormStepTit
     {
         /// <summary>
         /// Required designer variable.
@@ -35,15 +35,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStepPerch));
-            this.buttonInitialPopulation = new System.Windows.Forms.Button();
-            this.buttonMakeFlocks = new System.Windows.Forms.Button();
-            this.buttonKettle = new System.Windows.Forms.Button();
-            this.buttonFlocksSwim = new System.Windows.Forms.Button();
-            this.buttonLeaderToPool = new System.Windows.Forms.Button();
-            this.buttonCheckEndConditions = new System.Windows.Forms.Button();
-            this.buttonSearchInPool = new System.Windows.Forms.Button();
-            this.buttonChooseTheBest = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStepTit));
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,117 +59,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // buttonInitialPopulation
-            // 
-            this.buttonInitialPopulation.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonInitialPopulation.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonInitialPopulation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonInitialPopulation.Location = new System.Drawing.Point(24, 30);
-            this.buttonInitialPopulation.Name = "buttonInitialPopulation";
-            this.buttonInitialPopulation.Size = new System.Drawing.Size(127, 61);
-            this.buttonInitialPopulation.TabIndex = 1;
-            this.buttonInitialPopulation.Text = "Генерация начальной популяции";
-            this.buttonInitialPopulation.UseVisualStyleBackColor = false;
-            this.buttonInitialPopulation.Click += new System.EventHandler(this.buttonInitialPopulation_Click);
-            // 
-            // buttonMakeFlocks
-            // 
-            this.buttonMakeFlocks.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonMakeFlocks.Enabled = false;
-            this.buttonMakeFlocks.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonMakeFlocks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMakeFlocks.Location = new System.Drawing.Point(24, 118);
-            this.buttonMakeFlocks.Name = "buttonMakeFlocks";
-            this.buttonMakeFlocks.Size = new System.Drawing.Size(127, 61);
-            this.buttonMakeFlocks.TabIndex = 1;
-            this.buttonMakeFlocks.Text = "Деление популяции на стаи";
-            this.buttonMakeFlocks.UseVisualStyleBackColor = false;
-            this.buttonMakeFlocks.Click += new System.EventHandler(this.buttonMakeFlocks_Click);
-            // 
-            // buttonKettle
-            // 
-            this.buttonKettle.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonKettle.Enabled = false;
-            this.buttonKettle.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonKettle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonKettle.Location = new System.Drawing.Point(24, 207);
-            this.buttonKettle.Name = "buttonKettle";
-            this.buttonKettle.Size = new System.Drawing.Size(127, 61);
-            this.buttonKettle.TabIndex = 1;
-            this.buttonKettle.Text = "Реализация окуневого котла в стаях";
-            this.buttonKettle.UseVisualStyleBackColor = false;
-            this.buttonKettle.Click += new System.EventHandler(this.buttonKettle_Click);
-            // 
-            // buttonFlocksSwim
-            // 
-            this.buttonFlocksSwim.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonFlocksSwim.Enabled = false;
-            this.buttonFlocksSwim.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonFlocksSwim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFlocksSwim.Location = new System.Drawing.Point(24, 296);
-            this.buttonFlocksSwim.Name = "buttonFlocksSwim";
-            this.buttonFlocksSwim.Size = new System.Drawing.Size(127, 61);
-            this.buttonFlocksSwim.TabIndex = 1;
-            this.buttonFlocksSwim.Text = "Плавание стай";
-            this.buttonFlocksSwim.UseVisualStyleBackColor = false;
-            this.buttonFlocksSwim.Click += new System.EventHandler(this.buttonFlocksSwim_Click);
-            // 
-            // buttonLeaderToPool
-            // 
-            this.buttonLeaderToPool.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonLeaderToPool.Enabled = false;
-            this.buttonLeaderToPool.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonLeaderToPool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLeaderToPool.Location = new System.Drawing.Point(24, 385);
-            this.buttonLeaderToPool.Name = "buttonLeaderToPool";
-            this.buttonLeaderToPool.Size = new System.Drawing.Size(127, 61);
-            this.buttonLeaderToPool.TabIndex = 1;
-            this.buttonLeaderToPool.Text = "Перемещение лидера стай в множество Pool";
-            this.buttonLeaderToPool.UseVisualStyleBackColor = false;
-            this.buttonLeaderToPool.Click += new System.EventHandler(this.buttonLeaderToPool_Click);
-            // 
-            // buttonCheckEndConditions
-            // 
-            this.buttonCheckEndConditions.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonCheckEndConditions.Enabled = false;
-            this.buttonCheckEndConditions.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonCheckEndConditions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCheckEndConditions.Location = new System.Drawing.Point(206, 208);
-            this.buttonCheckEndConditions.Name = "buttonCheckEndConditions";
-            this.buttonCheckEndConditions.Size = new System.Drawing.Size(117, 61);
-            this.buttonCheckEndConditions.TabIndex = 1;
-            this.buttonCheckEndConditions.Text = "Проверка условий завершения поиска";
-            this.buttonCheckEndConditions.UseVisualStyleBackColor = false;
-            this.buttonCheckEndConditions.Click += new System.EventHandler(this.buttonCheckEndConditions_Click);
-            // 
-            // buttonSearchInPool
-            // 
-            this.buttonSearchInPool.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonSearchInPool.Enabled = false;
-            this.buttonSearchInPool.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonSearchInPool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSearchInPool.Location = new System.Drawing.Point(206, 515);
-            this.buttonSearchInPool.Name = "buttonSearchInPool";
-            this.buttonSearchInPool.Size = new System.Drawing.Size(117, 60);
-            this.buttonSearchInPool.TabIndex = 1;
-            this.buttonSearchInPool.Text = "Интенсивный поиск в множестве Pool";
-            this.buttonSearchInPool.UseVisualStyleBackColor = false;
-            this.buttonSearchInPool.Click += new System.EventHandler(this.buttonSearchInPool_Click);
-            // 
-            // buttonChooseTheBest
-            // 
-            this.buttonChooseTheBest.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonChooseTheBest.Enabled = false;
-            this.buttonChooseTheBest.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonChooseTheBest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonChooseTheBest.Location = new System.Drawing.Point(24, 515);
-            this.buttonChooseTheBest.Name = "buttonChooseTheBest";
-            this.buttonChooseTheBest.Size = new System.Drawing.Size(127, 60);
-            this.buttonChooseTheBest.TabIndex = 1;
-            this.buttonChooseTheBest.Text = "Выбор наилучшего решения";
-            this.buttonChooseTheBest.UseVisualStyleBackColor = false;
-            this.buttonChooseTheBest.Click += new System.EventHandler(this.buttonChooseTheBest_Click);
             // 
             // dataGridView3
             // 
@@ -254,7 +135,6 @@
             this.buttonAnswer.TabIndex = 34;
             this.buttonAnswer.Text = "Получить ответ";
             this.buttonAnswer.UseVisualStyleBackColor = false;
-            this.buttonAnswer.Click += new System.EventHandler(this.buttonAnswer_Click);
             // 
             // groupBox1
             // 
@@ -331,7 +211,6 @@
             this.chart1.Size = new System.Drawing.Size(348, 384);
             this.chart1.TabIndex = 38;
             this.chart1.Text = "chart1";
-            this.chart1.Paint += new System.Windows.Forms.PaintEventHandler(this.ChartGraph_Paint);
             // 
             // label3
             // 
@@ -354,7 +233,6 @@
             this.button1.TabIndex = 40;
             this.button1.Text = "Выполнить N итераций";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // numericUpDown1
             // 
@@ -415,7 +293,7 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
-            // FormStepPerch
+            // FormStepTit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -431,19 +309,10 @@
             this.Controls.Add(this.buttonAnswer);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.buttonChooseTheBest);
-            this.Controls.Add(this.buttonSearchInPool);
-            this.Controls.Add(this.buttonCheckEndConditions);
-            this.Controls.Add(this.buttonLeaderToPool);
-            this.Controls.Add(this.buttonFlocksSwim);
-            this.Controls.Add(this.buttonKettle);
-            this.Controls.Add(this.buttonMakeFlocks);
-            this.Controls.Add(this.buttonInitialPopulation);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormStepPerch";
+            this.Name = "FormStepTit";
             this.Text = "Метод воробьиной колонии. Работа по шагам";
-            this.Load += new System.EventHandler(this.FormStepPerch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
@@ -459,14 +328,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button buttonInitialPopulation;
-        private System.Windows.Forms.Button buttonMakeFlocks;
-        private System.Windows.Forms.Button buttonKettle;
-        private System.Windows.Forms.Button buttonFlocksSwim;
-        private System.Windows.Forms.Button buttonLeaderToPool;
-        private System.Windows.Forms.Button buttonCheckEndConditions;
-        private System.Windows.Forms.Button buttonSearchInPool;
-        private System.Windows.Forms.Button buttonChooseTheBest;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.PictureBox pictureBox3;

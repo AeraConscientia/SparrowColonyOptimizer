@@ -5,13 +5,17 @@ using System.Text;
 
 namespace AIS
 {
-    public class Sparrow
+    public class Tit
     {
         public Vector coords;
         public double fitness = 0;
+        public Tit best;
+        public Tit local_best;
 
-        public Sparrow(int dim)
+        public Tit(int dim)
         {
+            best = this;
+            local_best = this;
             coords = new Vector(dim);
 
             for (int i = 0; i < dim; i++)
