@@ -112,7 +112,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(6, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 16);
+            this.label1.Size = new System.Drawing.Size(153, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Вид целевой функции";
             // 
@@ -143,7 +143,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(6, 215);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(222, 16);
+            this.label2.Size = new System.Drawing.Size(223, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Множество допустимых решений";
             // 
@@ -227,7 +227,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(6, 682);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(223, 16);
+            this.label7.Size = new System.Drawing.Size(224, 16);
             this.label7.TabIndex = 31;
             this.label7.Text = "Параметры распределения Леви";
             // 
@@ -293,7 +293,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(3, 325);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(155, 16);
+            this.label3.Size = new System.Drawing.Size(156, 16);
             this.label3.TabIndex = 29;
             this.label3.Text = "Параметры алгоритма";
             // 
@@ -431,7 +431,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 221);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(210, 16);
+            this.label4.Size = new System.Drawing.Size(211, 16);
             this.label4.TabIndex = 36;
             this.label4.Text = "Результаты работы алгоритма";
             // 
@@ -509,7 +509,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(795, 37);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(337, 16);
+            this.label5.Size = new System.Drawing.Size(338, 16);
             this.label5.TabIndex = 38;
             this.label5.Text = "Изображение популяции и линий уровня функции";
             // 
@@ -543,7 +543,6 @@
             // pictureBox4
             // 
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox4.Image = global::AIS.Properties.Resources.FlockColor2;
             this.pictureBox4.Location = new System.Drawing.Point(795, 550);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(489, 80);
