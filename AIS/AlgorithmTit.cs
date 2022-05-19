@@ -65,15 +65,11 @@ namespace AIS
                 //Диффузионный поиск со скачками
                 int k = 0;              //Шаг 2.1
 
-                CheckBorders();
-
                 do
                 {
                     I = I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
                     best = I[0];                                //same
                     ProcessInfoAboutFlock();                    //Шаг 2.3-2.7
-
-                    CheckBorders();
 
                     Vector bestCoords = new Vector(best.coords.dim);
                     for (int i = 0; i < best.coords.dim; i++)
@@ -350,16 +346,16 @@ namespace AIS
         {
             for (int i = 0; i < NP; i++)
             {
-                double x = random.NextDouble();
-                double y = random.NextDouble();
-
-                x = ((Math.Abs(D[0, 0]) + Math.Abs(D[0, 1])) * x - Math.Abs(D[0, 0]));
-                y = ((Math.Abs(D[1, 0]) + Math.Abs(D[1, 1])) * y - Math.Abs(D[1, 0]));
 
                 Tit Agent = new Tit(dim);
-                Agent.coords[0] = x;
-                Agent.coords[1] = y;
-                Agent.fitness = function(x, y, f);
+                for (int j = 0; j < dim; j++)
+                {
+                    double val = random.NextDouble();
+                    val = ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * val - Math.Abs(D[j, 0]));
+                    Agent.coords[j] = val;
+                }
+
+                Agent.fitness = function(Agent.coords[0], Agent.coords[1], f);
                 I.Add(Agent);
             }
         }
