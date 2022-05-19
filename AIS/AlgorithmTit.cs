@@ -104,40 +104,24 @@ namespace AIS
 
                     best.fitness = function(best.coords[0], best.coords[1],f);
 
-
                     I[0] = best;
-
-                    if (outOfBorders(best))
-                        throw new Exception();
-
-                    CheckBorders();
 
                     for (int i = 1; i < NP; i++)
                     {
-                        double x = random.NextDouble();
-                        double y = random.NextDouble();
-
-                        double X = 0.5 * Math.Pow(r, k) * (D[0, 1] - D[0, 0]);
-                        double Y = 0.5 * Math.Pow(r, k) * (D[1, 1] - D[1, 0]);
-
-                        x = best.coords[0] + Math.Pow(r, k) * ((Math.Abs(D[0, 0]) + Math.Abs(D[0, 1])) * x - Math.Abs(D[0, 0]));  //TODO: проверить!
-                        y = best.coords[1] + Math.Pow(r, k) * ((Math.Abs(D[1, 0]) + Math.Abs(D[1, 1])) * y - Math.Abs(D[1, 0]));
-
-                        I[i].coords[0] = x;
-                        I[i].coords[1] = y;
-                        I[i].fitness = function(x, y, f);
-
-                        /*
-                        //проверка выхода за границы    -- fix
                         for (int j = 0; j < dim; j++)
                         {
-                            if (I[i].coords[j] < D[j, 0])
-                                I[i].coords[j] = D[j, 0];
+                            double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
-                            if (I[i].coords[j] > D[j, 1])
-                                I[i].coords[j] = D[j, 1];
+                            if (val < D[j, 0])
+                                val = Math.Abs(D[j, 0]) + Math.Abs(best.coords[j]) * random.NextDouble() - Math.Abs(D[j, 0]);
+
+                            if (val > D[j, 1])
+                                val = Math.Abs(best.coords[j]) + Math.Abs(D[j, 1]) * random.NextDouble() - Math.Abs(best.coords[j]);
+
+                            I[i].coords[j] = val;
                         }
-                        */
+                        I[i].fitness = function(I[i].coords[0], I[i].coords[1], f);
+                        
                         if (outOfBorders(I[i]))
                             throw new Exception();
 
@@ -164,26 +148,20 @@ namespace AIS
                 //ВЫХОД ЗА ГРАНИЦЫ В ЭТОМ МЕСТЕ (fixed)
                 for (int i = 1; i < NP; i++)
                 {
-                    double x = random.NextDouble();
-                    double y = random.NextDouble();
-
-                    x = I[0].coords[0] + r * ((Math.Abs(D[0, 0]) + Math.Abs(D[0, 1])) * x - Math.Abs(D[0, 0]));  //!!
-                    y = I[0].coords[1] + r * ((Math.Abs(D[1, 0]) + Math.Abs(D[1, 1])) * y - Math.Abs(D[1, 0]));  //!!
-
-                    I[i].coords[0] = x;
-                    I[i].coords[1] = y;
-                    I[i].fitness = function(x, y, f);
-
-                    //проверка выхода за границы    -- fix
                     for (int j = 0; j < dim; j++)
                     {
-                        if (I[i].coords[j] < D[j, 0])
-                            I[i].coords[j] = D[j, 0];
+                        double val = I[0].coords[j] + r * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
-                        if (I[i].coords[j] > D[j, 1])
-                            I[i].coords[j] = D[j, 1];
+                        if (val < D[j, 0])
+                            val = Math.Abs(D[j, 0]) + Math.Abs(best.coords[j]) * random.NextDouble() - Math.Abs(D[j, 0]);
+
+                        if (val > D[j, 1])
+                            val = Math.Abs(best.coords[j]) + Math.Abs(D[j, 1]) * random.NextDouble() - Math.Abs(best.coords[j]);
+
+                        I[i].coords[j] = val;
                     }
 
+                    I[i].fitness = function(I[i].coords[0], I[i].coords[1], f);
 
                     if (I[i].fitness < I[i].best.fitness)
                         I[i].best = I[i];
