@@ -50,6 +50,10 @@ namespace AIS
         public double P;
         public double mu;
         public double eps;
+        public List<Tit> memory;
+
+        private int dim;
+
 
 
         double exact;
@@ -133,6 +137,12 @@ namespace AIS
                 Cp[0] = x0; Cp[1] = y0;
             }
             return Cp;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            algo.Initilize();
+            algo.InitalPopulationGeneration();
         }
 
         /// <summary>Отрисовка стрелочек</summary>

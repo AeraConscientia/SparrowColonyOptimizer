@@ -53,9 +53,7 @@ namespace AIS
             this.D = D;
             this.f = f;
 
-            dim = 2;
-            random = new Random();
-            memory = new List<Tit>();
+            Initilize();
 
             InitalPopulationGeneration();       //Шаг 1.2
             double r = 1;
@@ -67,6 +65,7 @@ namespace AIS
 
                 do
                 {
+
                     I = I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
                     best = I[0];                                //same
                     ProcessInfoAboutFlock();                    //Шаг 2.3-2.7
@@ -113,10 +112,10 @@ namespace AIS
                             double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
                             if (val < D[j, 0])
-                                val = Math.Abs(D[j, 0]) + Math.Abs(best.coords[j]) * random.NextDouble() - Math.Abs(D[j, 0]);
+                                val = (Math.Abs(D[j, 0]) + Math.Abs(best.coords[j])) * random.NextDouble() - Math.Abs(D[j, 0]);
 
                             if (val > D[j, 1])
-                                val = Math.Abs(best.coords[j]) + Math.Abs(D[j, 1]) * random.NextDouble() - Math.Abs(best.coords[j]);
+                                val = (Math.Abs(best.coords[j]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(best.coords[j]);
 
                             I[i].coords[j] = val;
                         }
@@ -153,10 +152,10 @@ namespace AIS
                         double val = I[0].coords[j] + r * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
                         if (val < D[j, 0])
-                            val = Math.Abs(D[j, 0]) + Math.Abs(best.coords[j]) * random.NextDouble() - Math.Abs(D[j, 0]);
+                            val = (Math.Abs(D[j, 0]) + Math.Abs(best.coords[j])) * random.NextDouble() - Math.Abs(D[j, 0]);
 
                         if (val > D[j, 1])
-                            val = Math.Abs(best.coords[j]) + Math.Abs(D[j, 1]) * random.NextDouble() - Math.Abs(best.coords[j]);
+                            val = (Math.Abs(best.coords[j]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(best.coords[j]);
 
                         I[i].coords[j] = val;
                     }
@@ -172,6 +171,13 @@ namespace AIS
             }
 
             return Pool.OrderBy(t => t.fitness).ToList()[0];        //Шаг 4
+        }
+
+        public void Initilize()
+        {
+            dim = 2;
+            random = new Random();
+            memory = new List<Tit>();
         }
 
         private void CheckBorders()
