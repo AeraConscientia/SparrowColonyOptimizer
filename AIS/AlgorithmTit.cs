@@ -75,7 +75,7 @@ namespace AIS
                         bestCoords[i] = best.coords[i];
 
                     best.coords += (alpha / (k + 1)) * Levy();                      //Шаг 2.8       //ВЫХОД ЗА ГРАНИЦЫ
-
+                    // TODO: кажется, здесь best убегает и портит всю стаю. НЕ ИСПРАВЛЕНО
                     for (int j = 0; j < dim; j++)
                     {
                         if ((best.coords[j] < D[j, 0]) || (best.coords[j] > D[j, 1]))
@@ -90,7 +90,7 @@ namespace AIS
                                 ++NumTries;
                             } while (((tmp < D[j, 0]) || (tmp > D[j, 1])) && (NumTries <= 10));
 
-                            if (NumTries > 10)
+                            if (NumTries > 10)//NumTries > 10
                             {
                                 best.coords[j] = ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
                             }
@@ -134,7 +134,7 @@ namespace AIS
                     ++k;
                 } while ((k < K) && (Math.Pow(r, k) < eps));
 
-                Pool.Add(memory.OrderBy(t => t).ToList()[0]);       //2.10
+                Pool.Add(memory.OrderBy(t => t.fitness).ToList()[0]);       //2.10
                 memory = new List<Tit>();
 
                 r = Math.Pow(eta, p);           //Шаг 3

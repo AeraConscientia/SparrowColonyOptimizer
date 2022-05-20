@@ -20,19 +20,30 @@ namespace AIS
 
         List<Vector> exactPoints = new List<Vector>();
 
+        /// <summary>Размер популяции</summary>
         int NP;
+        /// <summary>шаг при передвижении вожака стаи</summary>
         double alpha;
+        /// <summary>параметр сокращения множества поиска</summary>
         double gamma;
+        /// <summary>параметр распределения  Леви</summary>
         double lambda;
+        /// <summary>параметр восстановления множества поиска</summary>
         double eta;
+        /// <summary>величина радиуса, определяющая окрестность члена стаи</summary>
         double rho;
         double c1;
         double c2;
         double c3;
+        /// <summary>максимальное число записей в матрице памяти</summary>
         double K;
+        /// <summary>шаг интегрирования дифференциального уравнения</summary>
         double h;
+        /// <summary>максимальное число дискретных шагов</summary>
         double L;
+        /// <summary>максимальное число проходов </summary>
         double P;
+        /// <summary>параметр интенсивности скачков</summary>
         double mu;
         double eps;
         double[,] D;
@@ -79,20 +90,20 @@ namespace AIS
             dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Альфа";// "Максимальное количество итераций";
+            dataGridView2.Rows[1].Cells[0].Value = "α";
             dataGridView2.Rows[1].Cells[1].Value = 0.0001.ToString();
 
-            dataGridView2.Rows[2].Cells[0].Value = "Гамма";//"Количество стай"; 
+            dataGridView2.Rows[2].Cells[0].Value = "ϒ"; 
             dataGridView2.Rows[2].Cells[1].Value = 0.75.ToString();
 
-            dataGridView2.Rows[3].Cells[0].Value = "эта";//"Количество окуней в стае";
+            dataGridView2.Rows[3].Cells[0].Value = "η";
             dataGridView2.Rows[3].Cells[1].Value = 0.9.ToString();
 
-            dataGridView2.Rows[4].Cells[0].Value = "Лямбда";
+            dataGridView2.Rows[4].Cells[0].Value = "λ";
             dataGridView2.Rows[4].Cells[1].Value = 1.5.ToString();
 
             dataGridView2.Rows[5].Cells[0].Value = "Радиус окрестности ро";
-            dataGridView2.Rows[5].Cells[1].Value = 5;   //  1/5*(min(b_i-a_i))
+            dataGridView2.Rows[5].Cells[1].Value = 5;   
 
             dataGridView2.Rows[6].Cells[0].Value = "c1";
             dataGridView2.Rows[6].Cells[1].Value = 5;
@@ -115,10 +126,10 @@ namespace AIS
             dataGridView2.Rows[12].Cells[0].Value = "P";
             dataGridView2.Rows[12].Cells[1].Value = 30;
 
-            dataGridView2.Rows[13].Cells[0].Value = "mu";
+            dataGridView2.Rows[13].Cells[0].Value = "µ";
             dataGridView2.Rows[13].Cells[1].Value = 5;
 
-            dataGridView2.Rows[14].Cells[0].Value = "eps";
+            dataGridView2.Rows[14].Cells[0].Value = "ε";
             dataGridView2.Rows[14].Cells[1].Value = 0.000000001.ToString();
 
             //СТАРОЕ
@@ -542,7 +553,7 @@ namespace AIS
             p10.EndCap = LineCap.ArrowAnchor;
             e.Graphics.DrawLine(p10, 0, h - a, w - 10, h - a);
             e.Graphics.DrawLine(p10, a, h, a, 0);
-            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5);
+            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 11);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
         }
 
@@ -687,18 +698,18 @@ namespace AIS
                         mu = Convert.ToDouble(dataGridView2.Rows[13].Cells[1].Value);
 
                         eps = 0.0000001;
-
+                        int NumOfStarts = 100;
                         for (int p = 0; p < 1; p++)
                         {          
                             List<double> averFuncDeviation = new List<double>();
                             double minDeviation = 0;
                             int successCount = 0;
-                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
+                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / (float)NumOfStarts;
                             double averDer = 0;
                             double normalDerivation = 0;
                             int z = comboBox1.SelectedIndex;
             
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                             {
                                 algTit = new AlgorithmTit();
 
@@ -717,19 +728,19 @@ namespace AIS
                             }
             
                             double deltaSum = 0;
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                                 deltaSum += averFuncDeviation[i];
             
                             // СК отлонение?
-                            averDer = deltaSum / 1000f;
+                            averDer = deltaSum / (float)NumOfStarts;
             
                             averFuncDeviation.Sort();/////////////////////////////////////////////////
                             minDeviation = averFuncDeviation[0];
             
                             double dispersion = 0;
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                                 dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
-                            normalDerivation = Math.Sqrt((dispersion / 1000f));
+                            normalDerivation = Math.Sqrt((dispersion / (float)NumOfStarts));
             
                             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
                             StreamWriter r = new StreamWriter(fs);
