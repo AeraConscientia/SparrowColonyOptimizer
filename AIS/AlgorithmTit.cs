@@ -6,6 +6,7 @@ namespace AIS
 {
     public class AlgorithmTit
     {
+        //Tit Alg 2.0
         public int NP;
         public double alpha;
         public double gamma;
