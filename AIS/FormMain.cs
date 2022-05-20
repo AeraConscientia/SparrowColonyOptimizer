@@ -75,51 +75,45 @@ namespace AIS
             dataGridView1.Rows[0].Cells[0].Value = "x";
             dataGridView1.Rows[1].Cells[0].Value = "y";
 
-            dataGridView2.RowCount = 15;
+            dataGridView2.RowCount = 13;
             dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Альфа";// "Максимальное количество итераций";
-            dataGridView2.Rows[1].Cells[1].Value = 0.0001.ToString();
+            dataGridView2.Rows[1].Cells[0].Value = "Гамма";//"Количество стай"; 
+            dataGridView2.Rows[1].Cells[1].Value = 0.75.ToString();
 
-            dataGridView2.Rows[2].Cells[0].Value = "Гамма";//"Количество стай"; 
-            dataGridView2.Rows[2].Cells[1].Value = 0.75.ToString();
+            dataGridView2.Rows[2].Cells[0].Value = "эта";//"Количество окуней в стае";
+            dataGridView2.Rows[2].Cells[1].Value = 0.9.ToString();
 
-            dataGridView2.Rows[3].Cells[0].Value = "эта";//"Количество окуней в стае";
-            dataGridView2.Rows[3].Cells[1].Value = 0.9.ToString();
+            dataGridView2.Rows[3].Cells[0].Value = "Радиус окрестности ро";
+            dataGridView2.Rows[3].Cells[1].Value = 5;   //  1/5*(min(b_i-a_i))
 
-            dataGridView2.Rows[4].Cells[0].Value = "Лямбда";
-            dataGridView2.Rows[4].Cells[1].Value = 1.5.ToString();
+            dataGridView2.Rows[4].Cells[0].Value = "c1";
+            dataGridView2.Rows[4].Cells[1].Value = 5;
 
-            dataGridView2.Rows[5].Cells[0].Value = "Радиус окрестности ро";
-            dataGridView2.Rows[5].Cells[1].Value = 5;   //  1/5*(min(b_i-a_i))
+            dataGridView2.Rows[5].Cells[0].Value = "c2";
+            dataGridView2.Rows[5].Cells[1].Value = 5;
 
-            dataGridView2.Rows[6].Cells[0].Value = "c1";
+            dataGridView2.Rows[6].Cells[0].Value = "c3";
             dataGridView2.Rows[6].Cells[1].Value = 5;
 
-            dataGridView2.Rows[7].Cells[0].Value = "c2";
-            dataGridView2.Rows[7].Cells[1].Value = 5;
+            dataGridView2.Rows[7].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[7].Cells[1].Value = 10;
 
-            dataGridView2.Rows[8].Cells[0].Value = "c3";
-            dataGridView2.Rows[8].Cells[1].Value = 5;
+            dataGridView2.Rows[8].Cells[0].Value = "h";
+            dataGridView2.Rows[8].Cells[1].Value = 0.1.ToString();
 
-            dataGridView2.Rows[9].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[9].Cells[0].Value = "L";
             dataGridView2.Rows[9].Cells[1].Value = 10;
 
-            dataGridView2.Rows[10].Cells[0].Value = "h";
-            dataGridView2.Rows[10].Cells[1].Value = 0.1.ToString();
+            dataGridView2.Rows[10].Cells[0].Value = "P";
+            dataGridView2.Rows[10].Cells[1].Value = 30;
 
-            dataGridView2.Rows[11].Cells[0].Value = "L";
-            dataGridView2.Rows[11].Cells[1].Value = 10;
+            dataGridView2.Rows[11].Cells[0].Value = "mu";
+            dataGridView2.Rows[11].Cells[1].Value = 5;
 
-            dataGridView2.Rows[12].Cells[0].Value = "P";
-            dataGridView2.Rows[12].Cells[1].Value = 30;
-
-            dataGridView2.Rows[13].Cells[0].Value = "mu";
-            dataGridView2.Rows[13].Cells[1].Value = 5;
-
-            dataGridView2.Rows[14].Cells[0].Value = "eps";
-            dataGridView2.Rows[14].Cells[1].Value = 0.000000001.ToString();
+            dataGridView2.Rows[12].Cells[0].Value = "eps";
+            dataGridView2.Rows[12].Cells[1].Value = 0.000000001.ToString();
 
             //СТАРОЕ
 
@@ -130,11 +124,11 @@ namespace AIS
             dataGridView3.Rows[3].Cells[0].Value = "Exact value of f";
 
             dataGridView4.RowCount = 2;
-            dataGridView4.Rows[0].Cells[0].Value = "Distribution parameter";//"Параметр распределения";
+            dataGridView4.Rows[0].Cells[0].Value = "Лямбда";//"Параметр распределения";
             dataGridView4.Rows[0].Cells[1].Value = (1.5).ToString();
 
-            dataGridView4.Rows[1].Cells[0].Value = "Величина шага";
-            dataGridView4.Rows[1].Cells[1].Value = (0.6).ToString();
+            dataGridView4.Rows[1].Cells[0].Value = "Альфа";
+            dataGridView4.Rows[1].Cells[1].Value = (0.001).ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -152,21 +146,22 @@ namespace AIS
                     obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
                     NP       = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                    alpha    = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
-                    gamma    = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
-                    lambda   = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
-                    eta      = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
-                    rho      = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
-                    c1       = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
-                    c2       = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
-                    c3       = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
-                    K        = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
-                    h        = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
-                    L        = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
-                    P        = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
-                    mu       = Convert.ToDouble(dataGridView2.Rows[13].Cells[1].Value);
+                    gamma    = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
+                    eta      = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
+                    rho      = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
+                    c1       = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+                    c2       = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
+                    c3       = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
+                    K        = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
+                    h        = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
+                    L        = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
+                    P        = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
+                    mu       = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
 
-                    eps      = 0.0000001;
+                    lambda   = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                    alpha    = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+                    eps      = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
 
                     algTit = new AlgorithmTit();
 
@@ -620,29 +615,32 @@ namespace AIS
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            
             obl = new double[2, 2];
 
+            // область определения
             obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
             obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
             obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
             obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
             NP = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-            alpha = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
-            gamma = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
-            lambda = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
-            eta = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
-            rho = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
-            c1 = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
-            c2 = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
-            c3 = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
-            K = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
-            h = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
-            L = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
-            P = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
-            mu = Convert.ToDouble(dataGridView2.Rows[13].Cells[1].Value);
+            gamma = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
+            eta = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
+            rho = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
+            c1 = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+            c2 = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
+            c3 = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
+            K = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
+            h = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
+            L = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
+            P = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
+            mu = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
 
-            eps = 0.0000001;
+            lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+            alpha = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+            eps = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
 
             FormStepTit formPerch = new FormStepTit(comboBox1.SelectedIndex, obl, NP, alpha, gamma, lambda, eta, rho, c1, c2, c3, K, h, L, P, mu, eps, exact)
             {
@@ -666,27 +664,29 @@ namespace AIS
                     {
                         obl = new double[2, 2];
 
+                        // область определения
                         obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
                         obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
                         obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                         obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
                         NP = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                        alpha = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
-                        gamma = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
-                        lambda = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
-                        eta = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
-                        rho = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
-                        c1 = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
-                        c2 = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
-                        c3 = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
-                        K = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
-                        h = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
-                        L = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
-                        P = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
-                        mu = Convert.ToDouble(dataGridView2.Rows[13].Cells[1].Value);
+                        gamma = Convert.ToDouble(dataGridView2.Rows[1].Cells[1].Value);
+                        eta = Convert.ToDouble(dataGridView2.Rows[2].Cells[1].Value);
+                        rho = Convert.ToDouble(dataGridView2.Rows[3].Cells[1].Value);
+                        c1 = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+                        c2 = Convert.ToDouble(dataGridView2.Rows[5].Cells[1].Value);
+                        c3 = Convert.ToDouble(dataGridView2.Rows[6].Cells[1].Value);
+                        K = Convert.ToDouble(dataGridView2.Rows[7].Cells[1].Value);
+                        h = Convert.ToDouble(dataGridView2.Rows[8].Cells[1].Value);
+                        L = Convert.ToDouble(dataGridView2.Rows[9].Cells[1].Value);
+                        P = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
+                        mu = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
 
-                        eps = 0.0000001;
+                        lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                        alpha = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+                        eps = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
 
                         for (int p = 0; p < 1; p++)
                         {          
