@@ -90,7 +90,7 @@ namespace AIS
                                 ++NumTries;
                             } while (((tmp < D[j, 0]) || (tmp > D[j, 1])) && (NumTries <= 10));
 
-                            if (NumTries > 10)//NumTries > 10
+                            if (NumTries > 10)
                             {
                                 best.coords[j] = ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
                             }
@@ -111,7 +111,7 @@ namespace AIS
                         {
                             double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
-                            if (val < D[j, 0])
+                            if (val < D[j, 0]) 
                                 val = (Math.Abs(D[j, 0]) + Math.Abs(best.coords[j])) * random.NextDouble() - Math.Abs(D[j, 0]);
 
                             if (val > D[j, 1])
