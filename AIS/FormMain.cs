@@ -18,7 +18,7 @@ namespace AIS
         private Tit resultBest;
         private double[,] obl = new double[2, 2];
 
-        private const int NumOfStarts = 100;
+        private const int NumOfStarts = 1;
 
         List<Vector> exactPoints = new List<Vector>();
 
@@ -752,9 +752,9 @@ namespace AIS
                             //                   $"| функции |  популяции  |       |       |          |        |     |     |    |        |       |      |      |      |     |     от точного решения      |      отклонения     |      отклонение      |  успехов   | запусков |\r\n" +
                             //                   $"+---------+-------------+-------+-------+----------+--------+-----+-----+----+--------+-------+------+------+------+-----+-----------------------------+---------------------+----------------------+------------+----------+\r\n");
                             //                         0           1           2       3        4          5      6      7    8     9        10     11     12     13     14               15                          16                  17                 18           19
-                            r.Write(String.Format(@"|{0,6}   |    {1,4}     |{2,3:f4} |{3,3:f4} | {4,3:f6} | {5,3:f3}  | {6,1}  | {7,1}  | {8,1}  | {9,3:f4} |{10,3:f4} |{11,3:f3} |{12,3:f3} |{13,3:f3} |{14,3:f3} | {15,16:f6}            | {16,14:f6}      | {17,15:f6}      | {18,5}      | {19,4}     |",
-                                                      z+1,          NP,       gamma,      eta,     alpha,    lambda,       P,      K,      L,        mu,        h,          c1,        c2,         c3,         rho,     averDer,  minDeviation, normalDerivation, successCount, NumOfStarts));
-                            //                         0            1           2          3         4         5           6       7       8         9          10          11         12          13           14         15         16               17              18           19
+                            r.Write(String.Format(@"|{0,6}   |    {1,4}     |{2,4:f4} |{3,4:f4} |{4,9:f6} |{5,7:f4} |{6,4} |{7,4} |{8,4} | {9,3:f4} |{10,3:f4}|{11,6:f3}|{12,6:f3}|{13,6:f3}|{14,6:f3}| {15,16:f6}            | {16,14:f6}      | {17,15:f6}      | {18,5}      | {19,4}     |",
+                                                      z+1,          NP,        gamma,     eta,     alpha,   lambda,    P,     K,     L,       mu,       h,         c1,       c2,       c3,       rho,     averDer,  minDeviation, normalDerivation, successCount, NumOfStarts));
+                            //                         0            1            2         3         4        5        6      7      8        9         10         11        12        13         14         15         16               17              18           19
                             r.Write("\r\n");
 
                             r.Close();
