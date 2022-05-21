@@ -54,8 +54,6 @@ namespace AIS
 
         private int dim;
 
-
-
         double exact;
 
 
@@ -73,7 +71,7 @@ namespace AIS
         public AlgorithmTit algo = new AlgorithmTit();
 
         public double[,] showobl = new double[2, 2];
-        
+
         bool flag = false;
         /// <summary>Массив состояний</summary>
         bool[] Red = new bool[9];
@@ -145,6 +143,15 @@ namespace AIS
             algo.InitalPopulationGeneration();
         }
 
+        /// <summary>Сохранение графика приспособленности и положения стаи</summary>
+        private void buttonSavePictures_Click(object sender, EventArgs e)
+        {
+            chart1.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
+            if (pictureBox2.Image != null)
+                pictureBox2.Image.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //pictureBox2.Image.Save($"Iteration{Iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+            // TODO: Добавить в названия итерацию
+        }
+
         /// <summary>Отрисовка стрелочек</summary>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -153,11 +160,26 @@ namespace AIS
             Pen pRed   = new Pen(Color.Red, 2);
             Font f1    = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
+            // 2-3 шаги
+            e.Graphics.DrawLine(pBlack, 112, 152, 135, 152);
+
+            // 3-4 шаги
+            e.Graphics.DrawLine(pBlack, 231, 152, 254, 152);
+
+            // 6-8 шаги
+            e.Graphics.DrawLine(pBlack, 231, 287, 254, 287);
+
+            // 8-9 шаги
+            e.Graphics.DrawLine(pBlack, 112, 287, 135, 287);
+
+            // 10-13 шаги
+            e.Graphics.DrawLine(pBlack, 112, 414, 254, 414);
+
             //e.Graphics.DrawLine(pBlack, 250, 250, 250, 135);        // проверка -> деление  вертик 
             //e.Graphics.DrawLine(pBlack, 250, 135, 135, 135);        // проверка -> деление  горизонт
             //e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);          // Верхнее крыло повернутой стрелочки
             //e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);            // Нижнее крыло повернутой стрелочки
-            //
+            // 
             //if (Red[6] == true)
             //{
             //    e.Graphics.DrawLine(pRed, 250, 250, 250, 135);      // проверка -> деление  вертик 

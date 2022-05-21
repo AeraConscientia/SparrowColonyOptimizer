@@ -135,13 +135,13 @@ namespace AIS
             dataGridView3.Rows[0].Cells[0].Value = "x";
             dataGridView3.Rows[1].Cells[0].Value = "y";
             dataGridView3.Rows[2].Cells[0].Value = "f*";
-            dataGridView3.Rows[3].Cells[0].Value = "Exact value of f";
+            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
 
             dataGridView4.RowCount = 2;
-            dataGridView4.Rows[0].Cells[0].Value = "Лямбда";//"Параметр распределения";
+            dataGridView4.Rows[0].Cells[0].Value = "λ";//"Параметр распределения";
             dataGridView4.Rows[0].Cells[1].Value = (1.5).ToString();
 
-            dataGridView4.Rows[1].Cells[0].Value = "Альфа";
+            dataGridView4.Rows[1].Cells[0].Value = "α";
             dataGridView4.Rows[1].Cells[1].Value = (0.001).ToString();
         }
 
@@ -663,7 +663,6 @@ namespace AIS
                 Ar = Ar
             };
             formPerch.Show();
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
