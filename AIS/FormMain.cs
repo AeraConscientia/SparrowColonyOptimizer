@@ -506,15 +506,15 @@ namespace AIS
                                 double j1 = ((jj + 1) * (Math.Max(x2 - x1, y2 - y1)) / h + y1) / k;
                                 double i0 = ((ii - 1) * (Math.Max(x2 - x1, y2 - y1)) / w + x1) / k;
                                 double j0 = ((jj - 1) * (Math.Max(x2 - x1, y2 - y1)) / h + y1) / k;
-                                double f = function(i, j, z);
-                                double f2 = function(i0, j, z); 
-                                double f3 = function(i, j0, z); 
-                                double f4 = function(i1, j, z); 
-                                double f5 = function(i, j1, z); 
-                                double f6 = function(i1, j1, z);
-                                double f7 = function(i0, j1, z);
-                                double f8 = function(i1, j0, z);
-                                double f9 = function(i0, j0, z);
+                                double f = Function.function(i, j, z);
+                                double f2 = Function.function(i0, j, z); 
+                                double f3 = Function.function(i, j0, z); 
+                                double f4 = Function.function(i1, j, z); 
+                                double f5 = Function.function(i, j1, z); 
+                                double f6 = Function.function(i1, j1, z);
+                                double f7 = Function.function(i0, j1, z);
+                                double f8 = Function.function(i1, j0, z);
+                                double f9 = Function.function(i0, j0, z);
 
                                 if (((f2 < a1) || (f3 < a1) || (f4 < a1) || (f5 < a1) || (f6 < a1) || (f7 < a1) || (f8 < a1) || (f9 < a1)) && (f > a1)&&(flines[4]==true)) e.Graphics.FillRectangle(Brushes.PaleGreen, (float)(ii), (float)(h - jj), 1, 1);
                                 else if (((f2 < a3) || (f3 < a3) || (f4 < a3) || (f5 < a3) || (f6 < a3) || (f7 < a3) || (f8 < a3) || (f9 < a3)) && (f > a3)&&(flines[3]==true)) e.Graphics.FillRectangle(Brushes.YellowGreen, (float)(ii), (float)(h - jj), 1, 1);
@@ -553,52 +553,6 @@ namespace AIS
             e.Graphics.DrawLine(p10, a, h, a, 0);
             e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 11);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
-        }
-
-        /// <summary>Все тестовые функции</summary>
-        private float function(double x1, double x2, int f)
-        { 
-            float funct = 0;
-            if (f == 0)             // Швефель
-                funct = (float) (-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));
-            else if (f == 1)        // Мульти
-                funct = (float)(-(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1));
-            else if (f == 2)        // Корневая
-            { 
-                double[] c6 = Cpow(x1,x2,6);
-                funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
-            }
-            else if (f == 3)        // Шафер
-                funct = (float)(-(0.5-(Math.Pow(Math.Sin(Math.Sqrt(x1*x1+x2*x2)),2)-0.5)/(1+0.001*(x1*x1+x2*x2))));
-            else if (f == 4)        // Растригин
-                funct = (float)(-(-20 + (-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2*Math.PI * x2))));
-            else if (f == 5)        // Эклея
-                funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
-            else if (f == 6)        // skin
-                funct = (float)(-(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2)));
-            else if (f == 7)        // Trapfall
-                funct = (float)(-(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1-1)))+Math.Sqrt(Math.Abs(Math.Sin(x2+2)))))))+1));
-            else if (f == 8)        // Розенброк
-                funct = (float)(-(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1)));
-            else if (f == 9)        // Параболическая
-                funct = (float)(x1 * x1 + x2 * x2);
-            return funct;
-        }
-
-        /// <summary>Степень для комплексного числа</summary>
-        private double[] Cpow(double x, double y, int p)
-        {
-            double[] Cp = new double[2];
-            Cp[0] = x; Cp[1] = y;
-            double x0 = 0;
-            double y0 = 0;
-            for (int i = 1; i < p; i++)
-            {
-                x0 = Cp[0] * x - Cp[1] * y;
-                y0 = Cp[1] * x + Cp[0] * y;
-                Cp[0] = x0; Cp[1] = y0;
-            }
-            return Cp;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

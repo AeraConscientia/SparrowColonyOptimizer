@@ -55,18 +55,16 @@ namespace AIS
             this.f = f;
 
             Initilize();
-
             InitalPopulationGeneration();       //Шаг 1.2
+
             double r = 1;
 
             for (int p = 0; p < P; p++)
             {
                 //Диффузионный поиск со скачками
                 int k = 0;              //Шаг 2.1
-
                 do
                 {
-
                     I = I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
                     best = I[0];                                //same
                     ProcessInfoAboutFlock();                    //Шаг 2.3-2.7
@@ -75,8 +73,7 @@ namespace AIS
                     for (int i = 0; i < best.coords.dim; i++)
                         bestCoords[i] = best.coords[i];
 
-                    best.coords += (alpha / (k + 1)) * Levy();                      //Шаг 2.8       //ВЫХОД ЗА ГРАНИЦЫ
-                    // TODO: кажется, здесь best убегает и портит всю стаю. НЕ ИСПРАВЛЕНО
+                    best.coords += (alpha / (k + 1)) * Levy();                      //Шаг 2.8
                     for (int j = 0; j < dim; j++)
                     {
                         if ((best.coords[j] < D[j, 0]) || (best.coords[j] > D[j, 1]))
@@ -91,70 +88,33 @@ namespace AIS
                                 ++NumTries;
                             } while (((tmp < D[j, 0]) || (tmp > D[j, 1])) && (NumTries <= 10));
 
-                            if (NumTries > 10)
-                            {
-                                best.coords[j] = ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
-                            }
-                            else 
-                            {
-                                best.coords[j] = tmp;
-                            }        
+                            best.coords[j] = (NumTries > 10) ? ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0])) : tmp;
                         }
                     }
 
-                    CheckBorders();
-
-                    best.fitness = function(best.coords[0], best.coords[1],f);
+                    best.fitness = Function.function(best.coords[0], best.coords[1],f);
 
                     I[0] = best;
 
                     for (int i = 1; i < NP; i++)
                     {
-                        if (outOfBorders(I[i]))
-                            throw new Exception();
-
                         for (int j = 0; j < dim; j++)
                         {
                             double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
-                            double rnd = 0;
-                            int placeOfRepair = 0;
-
                             if (val < D[j, 0]) 
-                            {
-                                placeOfRepair = 1;
-
-                                rnd = random.NextDouble();
-                                val = (best.coords[j] - D[j, 0]) * rnd + D[j, 0];
-                            }
+                                val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
 
                             if (val > D[j, 1])
-                            {
-                                placeOfRepair = 2;
-
-                                rnd = random.NextDouble();
-                                val = (D[j, 1] - best.coords[j]) * rnd + best.coords[j];
-                            }
-                            
-                            if ((val > D[j, 1]))
-                                Console.WriteLine("111");
-
-                            if ((val < D[j, 0]))
-                                Console.WriteLine("111");
+                                val = (D[j, 1] - best.coords[j]) * random.NextDouble() + best.coords[j];
 
                             I[i].coords[j] = val;
                         }
-                        I[i].fitness = function(I[i].coords[0], I[i].coords[1], f);
-                        
-                        if (outOfBorders(I[i]))
-                            throw new Exception();
+                        I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
 
                         if (I[i].fitness < I[i].best.fitness)
                             I[i].best = I[i];
                     }
-
-                    CheckBorders();
-
                     r *= gamma;
                     ++k;
                 } while ((k < K) && (Math.Pow(r, k) < eps));
@@ -165,11 +125,8 @@ namespace AIS
                 r = Math.Pow(eta, p);           //Шаг 3
 
                 I[0] = Pool.OrderBy(t => t.fitness).ToList()[0];
-                I[0].fitness = function(I[0].coords[0], I[0].coords[1], f);
+                I[0].fitness = Function.function(I[0].coords[0], I[0].coords[1], f);
 
-                CheckBorders();
-
-                //ВЫХОД ЗА ГРАНИЦЫ В ЭТОМ МЕСТЕ (fixed)
                 for (int i = 1; i < NP; i++)
                 {
                     for (int j = 0; j < dim; j++)
@@ -185,13 +142,10 @@ namespace AIS
                         I[i].coords[j] = val;
                     }
 
-                    I[i].fitness = function(I[i].coords[0], I[i].coords[1], f);
+                    I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
 
                     if (I[i].fitness < I[i].best.fitness)
                         I[i].best = I[i];
-
-                    if (outOfBorders(I[i]))
-                        throw new Exception();
                 }
             }
 
@@ -299,7 +253,7 @@ namespace AIS
                 Vector sigma = c2 * r2 * (tit.best.coords - current_tit.coords) + c3 * r3 * (tit.local_best.coords - current_tit.coords);
 
                 new_tit.coords = current_tit.coords + h * f + Math.Sqrt(h) * sigma * ksi;
-                new_tit.fitness = function(new_tit.coords[0], new_tit.coords[1], this.f);
+                new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
 
                 if (beta < mu * h)
                 {
@@ -311,7 +265,7 @@ namespace AIS
                     }
                     
                     new_tit.coords += Thetta;
-                    new_tit.fitness = function(new_tit.coords[0], new_tit.coords[1], this.f);
+                    new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
                 }
 
                 //проверка выхода за границы
@@ -360,70 +314,13 @@ namespace AIS
                 for (int j = 0; j < dim; j++)
                 {
                     double val = random.NextDouble();
-                    val = ((Math.Abs(D[j, 1]) - Math.Abs(D[j, 0])) * val + Math.Abs(D[j, 0]));
+                    val = (D[j, 1] - D[j, 0]) * val + D[j, 0];
                     Agent.coords[j] = val;
                 }
 
-                Agent.fitness = function(Agent.coords[0], Agent.coords[1], f);
+                Agent.fitness = Function.function(Agent.coords[0], Agent.coords[1], f);
                 I.Add(Agent);
             }
-        }
-
-        private float function(double x1, double x2, int f)
-        {
-            float funct = 0;
-            if (f == 0) // Швефель
-            {
-                funct = (float)(-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));
-            }
-            else if (f == 1) // Мульти
-                funct = (float)(-(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1));
-            else if (f == 2) // корневая
-            {
-                double[] c6 = Cpow(x1, x2, 6);
-                funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
-            }
-            else if (f == 3) // Шафер
-                funct = (float)(-(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2))));
-            else if (f == 4) // Растригин
-            {
-                funct = (float)(-(-20 + (-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2 * Math.PI * x2))));
-            }
-            else if (f == 5) // Эклея
-            {
-                funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
-            }
-            else if (f == 6) // skin
-            {
-                funct = (float)(-(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2)));
-            }
-            else if (f == 7) //Trapfall
-            {
-                funct = (float)(-(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1 - 1))) + Math.Sqrt(Math.Abs(Math.Sin(x2 + 2))))))) + 1));
-            }
-            else if (f == 8) // Розенброк
-            {
-                funct = (float)(-(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1)));
-            }
-            else if (f == 9) // Параболическая
-            {
-                funct = (float)(x1 * x1 + x2 * x2);
-            }
-            return funct;
-        }
-        private double[] Cpow(double x, double y, int p)
-        {
-            double[] Cp = new double[2];
-            Cp[0] = x; Cp[1] = y;
-            double x0 = 0;
-            double y0 = 0;
-            for (int i = 1; i < p; i++)
-            {
-                x0 = Cp[0] * x - Cp[1] * y;
-                y0 = Cp[1] * x + Cp[0] * y;
-                Cp[0] = x0; Cp[1] = y0;
-            }
-            return Cp;
         }
     }
 }
