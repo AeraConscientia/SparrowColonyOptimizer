@@ -153,103 +153,103 @@ namespace AIS
             Pen pRed   = new Pen(Color.Red, 2);
             Font f1    = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
-            e.Graphics.DrawLine(pBlack, 250, 250, 250, 135);        // проверка -> деление  вертик 
-            e.Graphics.DrawLine(pBlack, 250, 135, 135, 135);        // проверка -> деление  горизонт
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);          // Верхнее крыло повернутой стрелочки
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);            // Нижнее крыло повернутой стрелочки
-
-            if (Red[6] == true)
-            {
-                e.Graphics.DrawLine(pRed, 250, 250, 250, 135);      // проверка -> деление  вертик 
-                e.Graphics.DrawLine(pRed, 250, 135, 140, 135);      // проверка -> деление  горизонт
-                e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 130 - 1);
-                e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 140);
-            }
-
-            e.Graphics.DrawLine(pBlack, 140, 405, 250, 405);        // лидер Pool -> проверка горизонт
-
-            e.Graphics.DrawLine(pBlack, 250, 405, 250, 210);        // лидер Pool -> проверка вертик
-            e.Graphics.DrawLine(pBlack, 250, 258, 255, 268);
-            e.Graphics.DrawLine(pBlack, 249, 258, 244, 268);
-
-            if (Red[4] == true)
-            {
-                e.Graphics.DrawLine(pRed, 140, 405, 250, 405);      // лидер Pool -> проверка горизонт
-                                     
-                e.Graphics.DrawLine(pRed, 250, 405, 250, 210);      // лидер Pool -> проверка вертик
-                e.Graphics.DrawLine(pRed, 250, 258, 255, 268);
-                e.Graphics.DrawLine(pRed, 249, 258, 244, 268);
-            }
-
-            e.Graphics.DrawLine(pBlack, 70, 300, 70, 373);          // плаванье -> лидер Pool 
-            e.Graphics.DrawLine(pBlack, 70, 370, 75, 360);
-            e.Graphics.DrawLine(pBlack, 69, 370, 64, 360);
-
-            if (Red[3] == true)
-            {
-                e.Graphics.DrawLine(pRed, 70, 300, 70, 373);        // плаванье -> лидер Pool 
-                e.Graphics.DrawLine(pRed, 70, 370, 75, 360);
-                e.Graphics.DrawLine(pRed, 69, 370, 64, 360);
-            }
-
-            e.Graphics.DrawLine(pBlack, 70, 210, 70, 283);          // котлы -> плаванье !!!
-            e.Graphics.DrawLine(pBlack, 70, 280, 75, 270);
-            e.Graphics.DrawLine(pBlack, 69, 280, 64, 270);
-
-            if (Red[2] == true)
-            {
-                e.Graphics.DrawLine(pRed, 70, 210, 70, 283);        // котлы -> плаванье !!!
-                e.Graphics.DrawLine(pRed, 70, 280, 75, 270);
-                e.Graphics.DrawLine(pRed, 69, 280, 64, 270);
-            }
-
-            e.Graphics.DrawLine(pBlack, 70, 120, 70, 193);          // деление -> котлы
-            e.Graphics.DrawLine(pBlack, 70, 195, 75, 185);
-            e.Graphics.DrawLine(pBlack, 69, 195, 64, 185);
-
-            if (Red[1] == true)
-            {
-                e.Graphics.DrawLine(pRed, 70, 120, 70, 193);        // деление -> котлы
-                e.Graphics.DrawLine(pRed, 70, 195, 75, 185);
-                e.Graphics.DrawLine(pRed, 69, 195, 64, 185);
-            }
-
-            e.Graphics.DrawLine(pBlack, 70, 30, 70, 105);           // генерация -> деление
-            e.Graphics.DrawLine(pBlack, 70, 102, 75, 92);
-            e.Graphics.DrawLine(pBlack, 69, 102, 64, 92);
-
-            if (Red[0] == true)
-            {
-                e.Graphics.DrawLine(pRed, 70, 30, 70, 105);         // генерация -> деление
-                e.Graphics.DrawLine(pRed, 70, 102, 75, 92);
-                e.Graphics.DrawLine(pRed, 69, 102, 64, 92);
-            }
-
-
-            e.Graphics.DrawLine(pBlack, 310, 225, 340, 225);        // проверка -> интенсивный поиск  горизонт
-            e.Graphics.DrawLine(pBlack, 340, 225, 340, 530);        // проверка -> интенсивный поиск  вертик
-            e.Graphics.DrawLine(pBlack, 310, 530, 340, 530);        // проверка -> интенсивный поиск  горизонт
-            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224);        // Верхнее крыло повернутой стрелочки
-            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225);        // Нижнее крыло повернутой стрелочки
-            
-            if (Red[7] == true)
-            {
-                e.Graphics.DrawLine(pRed, 310, 225, 340, 225);      // проверка -> интенсивный поиск  горизонт
-                e.Graphics.DrawLine(pRed, 340, 225, 340, 530);      // проверка -> интенсивный поиск  вертик
-                e.Graphics.DrawLine(pRed, 310, 530, 340, 530);      // проверка -> интенсивный поиск  горизонт
-                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 300 + 224);  // Верхнее крыло повернутой стрелочки
-                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 311 + 225);  // Нижнее крыло повернутой стрелочки 
-            }
-
-            e.Graphics.DrawLine(pBlack, 70, 530, 310, 530);         // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
-            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224);    // Верхнее крыло повернутой стрелочки 
-            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225);    // Нижнее крыло повернутой стрелочки 
-            if (Red[8] == true) 
-            {
-                e.Graphics.DrawLine(pRed, 70, 530, 310, 530);       // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
-                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224);  // Верхнее крыло повернутой стрелочки 
-                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225);  // Нижнее крыло повернутой стрелочки 
-            }
+            //e.Graphics.DrawLine(pBlack, 250, 250, 250, 135);        // проверка -> деление  вертик 
+            //e.Graphics.DrawLine(pBlack, 250, 135, 135, 135);        // проверка -> деление  горизонт
+            //e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);          // Верхнее крыло повернутой стрелочки
+            //e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);            // Нижнее крыло повернутой стрелочки
+            //
+            //if (Red[6] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 250, 250, 250, 135);      // проверка -> деление  вертик 
+            //    e.Graphics.DrawLine(pRed, 250, 135, 140, 135);      // проверка -> деление  горизонт
+            //    e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 130 - 1);
+            //    e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 140);
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 140, 405, 250, 405);        // лидер Pool -> проверка горизонт
+            //
+            //e.Graphics.DrawLine(pBlack, 250, 405, 250, 210);        // лидер Pool -> проверка вертик
+            //e.Graphics.DrawLine(pBlack, 250, 258, 255, 268);
+            //e.Graphics.DrawLine(pBlack, 249, 258, 244, 268);
+            //
+            //if (Red[4] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 140, 405, 250, 405);      // лидер Pool -> проверка горизонт
+            //                         
+            //    e.Graphics.DrawLine(pRed, 250, 405, 250, 210);      // лидер Pool -> проверка вертик
+            //    e.Graphics.DrawLine(pRed, 250, 258, 255, 268);
+            //    e.Graphics.DrawLine(pRed, 249, 258, 244, 268);
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 70, 300, 70, 373);          // плаванье -> лидер Pool 
+            //e.Graphics.DrawLine(pBlack, 70, 370, 75, 360);
+            //e.Graphics.DrawLine(pBlack, 69, 370, 64, 360);
+            //
+            //if (Red[3] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 70, 300, 70, 373);        // плаванье -> лидер Pool 
+            //    e.Graphics.DrawLine(pRed, 70, 370, 75, 360);
+            //    e.Graphics.DrawLine(pRed, 69, 370, 64, 360);
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 70, 210, 70, 283);          // котлы -> плаванье !!!
+            //e.Graphics.DrawLine(pBlack, 70, 280, 75, 270);
+            //e.Graphics.DrawLine(pBlack, 69, 280, 64, 270);
+            //
+            //if (Red[2] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 70, 210, 70, 283);        // котлы -> плаванье !!!
+            //    e.Graphics.DrawLine(pRed, 70, 280, 75, 270);
+            //    e.Graphics.DrawLine(pRed, 69, 280, 64, 270);
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 70, 120, 70, 193);          // деление -> котлы
+            //e.Graphics.DrawLine(pBlack, 70, 195, 75, 185);
+            //e.Graphics.DrawLine(pBlack, 69, 195, 64, 185);
+            //
+            //if (Red[1] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 70, 120, 70, 193);        // деление -> котлы
+            //    e.Graphics.DrawLine(pRed, 70, 195, 75, 185);
+            //    e.Graphics.DrawLine(pRed, 69, 195, 64, 185);
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 70, 30, 70, 105);           // генерация -> деление
+            //e.Graphics.DrawLine(pBlack, 70, 102, 75, 92);
+            //e.Graphics.DrawLine(pBlack, 69, 102, 64, 92);
+            //
+            //if (Red[0] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 70, 30, 70, 105);         // генерация -> деление
+            //    e.Graphics.DrawLine(pRed, 70, 102, 75, 92);
+            //    e.Graphics.DrawLine(pRed, 69, 102, 64, 92);
+            //}
+            //
+            //
+            //e.Graphics.DrawLine(pBlack, 310, 225, 340, 225);        // проверка -> интенсивный поиск  горизонт
+            //e.Graphics.DrawLine(pBlack, 340, 225, 340, 530);        // проверка -> интенсивный поиск  вертик
+            //e.Graphics.DrawLine(pBlack, 310, 530, 340, 530);        // проверка -> интенсивный поиск  горизонт
+            //e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224);        // Верхнее крыло повернутой стрелочки
+            //e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225);        // Нижнее крыло повернутой стрелочки
+            //
+            //if (Red[7] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 310, 225, 340, 225);      // проверка -> интенсивный поиск  горизонт
+            //    e.Graphics.DrawLine(pRed, 340, 225, 340, 530);      // проверка -> интенсивный поиск  вертик
+            //    e.Graphics.DrawLine(pRed, 310, 530, 340, 530);      // проверка -> интенсивный поиск  горизонт
+            //    e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 300 + 224);  // Верхнее крыло повернутой стрелочки
+            //    e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 311 + 225);  // Нижнее крыло повернутой стрелочки 
+            //}
+            //
+            //e.Graphics.DrawLine(pBlack, 70, 530, 310, 530);         // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+            //e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224);    // Верхнее крыло повернутой стрелочки 
+            //e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225);    // Нижнее крыло повернутой стрелочки 
+            //if (Red[8] == true) 
+            //{
+            //    e.Graphics.DrawLine(pRed, 70, 530, 310, 530);       // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+            //    e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224);  // Верхнее крыло повернутой стрелочки 
+            //    e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225);  // Нижнее крыло повернутой стрелочки 
+            //}
 
         }
 

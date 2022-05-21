@@ -18,21 +18,34 @@ namespace AIS
         private Tit resultBest;
         private double[,] obl = new double[2, 2];
 
+        private const int NumOfStarts = 100;
+
         List<Vector> exactPoints = new List<Vector>();
 
+        /// <summary>Размер популяции</summary>
         int NP;
+        /// <summary>шаг при передвижении вожака стаи</summary>
         double alpha;
+        /// <summary>параметр сокращения множества поиска</summary>
         double gamma;
+        /// <summary>параметр распределения  Леви</summary>
         double lambda;
+        /// <summary>параметр восстановления множества поиска</summary>
         double eta;
+        /// <summary>величина радиуса, определяющая окрестность члена стаи</summary>
         double rho;
         double c1;
         double c2;
         double c3;
+        /// <summary>максимальное число записей в матрице памяти</summary>
         double K;
+        /// <summary>шаг интегрирования дифференциального уравнения</summary>
         double h;
+        /// <summary>максимальное число дискретных шагов</summary>
         double L;
+        /// <summary>максимальное число проходов </summary>
         double P;
+        /// <summary>параметр интенсивности скачков</summary>
         double mu;
         double eps;
         double[,] D;
@@ -60,10 +73,11 @@ namespace AIS
             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
 
             StreamWriter r = new StreamWriter(fs);
-            r.Write($"+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\r\n" +
-                    $"|  Номер  |   Размер    | Кол-во |   Кол-во окуней |  Кол-во  | NStep | PRmax | delta | lambda | alfa  | Cреднее значение отклонения  |  Наименьшее значение   | Среднеквадратическое  |   Кол-во   |\r\n" +
-                    $"| функции |  популяции  |  стай  |       в стае    | итераций |       |       |   pr  |        |       |    от точного решения        |       отклонения       |      отклонение       |  успехов   |\r\n" +
-                    $"+---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------+\r\n");
+            r.Write($"+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+----------+\r\n" +
+            $"|  Номер  |   Размер    | Gamma |  eta  |   Alpha  | lambda |  P  |  K  |  L  |   mu   |   h   |  с1  |  с2  |  с3  | rho  | Cреднее значение отклонения | Наименьшее значение | Среднеквадратическое |   Кол-во   |  Число   |\r\n" +
+            $"| функции |  популяции  |       |       |          |        |     |     |     |        |       |      |      |      |      |     от точного решения      |      отклонения     |      отклонение      |  успехов   | запусков |\r\n" +
+            $"+---------+-------------+-------+-------+----------+--------+-----+-----+-----+--------+-------+------+------+------+------+-----------------------------+---------------------+----------------------+------------+----------+\r\n");
+            
             r.Close();
             fs.Close();
 
@@ -79,40 +93,40 @@ namespace AIS
             dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Гамма";//"Количество стай"; 
+            dataGridView2.Rows[1].Cells[0].Value = "ϒ"; 
             dataGridView2.Rows[1].Cells[1].Value = 0.75.ToString();
 
-            dataGridView2.Rows[2].Cells[0].Value = "эта";//"Количество окуней в стае";
+            dataGridView2.Rows[2].Cells[0].Value = "η";
             dataGridView2.Rows[2].Cells[1].Value = 0.9.ToString();
 
             dataGridView2.Rows[3].Cells[0].Value = "Радиус окрестности ро";
-            dataGridView2.Rows[3].Cells[1].Value = 5;   //  1/5*(min(b_i-a_i))
+            dataGridView2.Rows[3].Cells[1].Value = 5;   
 
-            dataGridView2.Rows[4].Cells[0].Value = "c1";
+            dataGridView2.Rows[4].Cells[0].Value = "c3";
             dataGridView2.Rows[4].Cells[1].Value = 5;
 
-            dataGridView2.Rows[5].Cells[0].Value = "c2";
-            dataGridView2.Rows[5].Cells[1].Value = 5;
+            dataGridView2.Rows[5].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[5].Cells[1].Value = 10;
 
-            dataGridView2.Rows[6].Cells[0].Value = "c3";
-            dataGridView2.Rows[6].Cells[1].Value = 5;
+            dataGridView2.Rows[6].Cells[0].Value = "h";
+            dataGridView2.Rows[6].Cells[1].Value = 0.1.ToString();
 
-            dataGridView2.Rows[7].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[7].Cells[0].Value = "L";
             dataGridView2.Rows[7].Cells[1].Value = 10;
 
-            dataGridView2.Rows[8].Cells[0].Value = "h";
-            dataGridView2.Rows[8].Cells[1].Value = 0.1.ToString();
+            dataGridView2.Rows[8].Cells[0].Value = "P";
+            dataGridView2.Rows[8].Cells[1].Value = 30;
 
-            dataGridView2.Rows[9].Cells[0].Value = "L";
-            dataGridView2.Rows[9].Cells[1].Value = 10;
+            dataGridView2.Rows[9].Cells[0].Value = "mu";
+            dataGridView2.Rows[9].Cells[1].Value = 5;
 
             dataGridView2.Rows[10].Cells[0].Value = "P";
             dataGridView2.Rows[10].Cells[1].Value = 30;
 
-            dataGridView2.Rows[11].Cells[0].Value = "mu";
+            dataGridView2.Rows[11].Cells[0].Value = "µ";
             dataGridView2.Rows[11].Cells[1].Value = 5;
 
-            dataGridView2.Rows[12].Cells[0].Value = "eps";
+            dataGridView2.Rows[12].Cells[0].Value = "ε";
             dataGridView2.Rows[12].Cells[1].Value = 0.000000001.ToString();
 
             //СТАРОЕ
@@ -537,7 +551,7 @@ namespace AIS
             p10.EndCap = LineCap.ArrowAnchor;
             e.Graphics.DrawLine(p10, 0, h - a, w - 10, h - a);
             e.Graphics.DrawLine(p10, a, h, a, 0);
-            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5);
+            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 11);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
         }
 
@@ -610,7 +624,7 @@ namespace AIS
         /// <summary>Вызов pdf файла с алгоритмом</summary>
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("HelpPerchMethod.pdf");
+            Process.Start("HelpPerchMethod.pdf"); // TODO: сделать pdf синиц и заменить
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -683,6 +697,7 @@ namespace AIS
                         P = Convert.ToDouble(dataGridView2.Rows[10].Cells[1].Value);
                         mu = Convert.ToDouble(dataGridView2.Rows[11].Cells[1].Value);
 
+
                         lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
                         alpha = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
@@ -693,12 +708,12 @@ namespace AIS
                             List<double> averFuncDeviation = new List<double>();
                             double minDeviation = 0;
                             int successCount = 0;
-                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
+                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / (float)NumOfStarts;
                             double averDer = 0;
                             double normalDerivation = 0;
                             int z = comboBox1.SelectedIndex;
             
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                             {
                                 algTit = new AlgorithmTit();
 
@@ -717,25 +732,32 @@ namespace AIS
                             }
             
                             double deltaSum = 0;
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                                 deltaSum += averFuncDeviation[i];
             
                             // СК отлонение?
-                            averDer = deltaSum / 1000f;
+                            averDer = deltaSum / (float)NumOfStarts;
             
                             averFuncDeviation.Sort();/////////////////////////////////////////////////
                             minDeviation = averFuncDeviation[0];
             
                             double dispersion = 0;
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < NumOfStarts; i++)
                                 dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
-                            normalDerivation = Math.Sqrt((dispersion / 1000f));
+                            normalDerivation = Math.Sqrt((dispersion / (float)NumOfStarts));
             
                             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
                             StreamWriter r = new StreamWriter(fs);
-                            r.Write(String.Format(@"{0}", successCount));
+                            //           r.Write($"+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+----------+\r\n" +
+                            //                   $"|  Номер  |   Размер    | Gamma |  eta  |   Alpha  | lambda |  P  |  K  |  L |   mu   |   h   |  с1  |  с2  |  с3  | rho | Cреднее значение отклонения | Наименьшее значение | Среднеквадратическое |   Кол-во   |  Число   |\r\n" +
+                            //                   $"| функции |  популяции  |       |       |          |        |     |     |    |        |       |      |      |      |     |     от точного решения      |      отклонения     |      отклонение      |  успехов   | запусков |\r\n" +
+                            //                   $"+---------+-------------+-------+-------+----------+--------+-----+-----+----+--------+-------+------+------+------+-----+-----------------------------+---------------------+----------------------+------------+----------+\r\n");
+                            //                         0           1           2       3        4          5      6      7    8     9        10     11     12     13     14               15                          16                  17                 18           19
+                            r.Write(String.Format(@"|{0,6}   |    {1,4}     |{2,3:f4} |{3,3:f4} | {4,3:f6} | {5,3:f3}  | {6,1}  | {7,1}  | {8,1}  | {9,3:f4} |{10,3:f4} |{11,3:f3} |{12,3:f3} |{13,3:f3} |{14,3:f3} | {15,16:f6}            | {16,14:f6}      | {17,15:f6}      | {18,5}      | {19,4}     |",
+                                                      z+1,          NP,       gamma,      eta,     alpha,    lambda,       P,      K,      L,        mu,        h,          c1,        c2,         c3,         rho,     averDer,  minDeviation, normalDerivation, successCount, NumOfStarts));
+                            //                         0            1           2          3         4         5           6       7       8         9          10          11         12          13           14         15         16               17              18           19
                             r.Write("\r\n");
-            
+
                             r.Close();
             
                             fs.Close();
