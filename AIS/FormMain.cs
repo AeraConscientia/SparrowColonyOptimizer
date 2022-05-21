@@ -123,7 +123,7 @@ namespace AIS
             dataGridView2.Rows[10].Cells[0].Value = "P";
             dataGridView2.Rows[10].Cells[1].Value = 30;
 
-            dataGridView2.Rows[11].Cells[0].Value = "mu";
+            dataGridView2.Rows[11].Cells[0].Value = "µ";
             dataGridView2.Rows[11].Cells[1].Value = 5;
 
             dataGridView2.Rows[12].Cells[0].Value = "ε";
@@ -706,9 +706,9 @@ namespace AIS
                             //                   $"| функции |  популяции  |       |       |          |        |     |     |    |        |       |      |      |      |     |     от точного решения      |      отклонения     |      отклонение      |  успехов   | запусков |\r\n" +
                             //                   $"+---------+-------------+-------+-------+----------+--------+-----+-----+----+--------+-------+------+------+------+-----+-----------------------------+---------------------+----------------------+------------+----------+\r\n");
                             //                         0           1           2       3        4          5      6      7    8     9        10     11     12     13     14               15                          16                  17                 18           19
-                            r.Write(String.Format(@"|{0,6}   |    {1,4}     |{2,4:f4} |{3,4:f4} |{4,9:f6} |{5,7:f4} |{6,4} |{7,4} |{8,4} | {9,3:f4} |{10,3:f4}|{11,6:f3}|{12,6:f3}|{13,6:f3}|{14,6:f3}| {15,16:f6}            | {16,14:f6}      | {17,15:f6}      | {18,5}      | {19,4}     |",
-                                                      z+1,          NP,        gamma,     eta,     alpha,   lambda,    P,     K,     L,       mu,       h,         c1,       c2,       c3,       rho,     averDer,  minDeviation, normalDerivation, successCount, NumOfStarts));
-                            //                         0            1            2         3         4        5        6      7      8        9         10         11        12        13         14         15         16               17              18           19
+                            r.Write(String.Format(@"|{0,6}   |{1,8}     |{2,7:f4}|{3,7:f4}|{4,9:f6} |{5,7:f4} |{6,4} |{7,4} |{8,4} | {9,3:f4} |{10,7:f4}|{11,6:f3}|{12,6:f3}|{13,6:f3}|{14,6:f3}| {15,16:f6}            | {16,14:f6}      | {17,15:f6}      | {18,5}      | {19,4}     |",
+                                                      z+1,      NP,        gamma,    eta,     alpha,   lambda,    P,     K,     L,       mu,       h,         c1,       c2,       c3,       rho,     averDer,  minDeviation, normalDerivation, successCount, NumOfStarts));
+                            //                         0        1            2        3         4        5        6      7      8        9         10         11        12        13         14         15         16               17              18           19
                             r.Write("\r\n");
 
                             r.Close();
