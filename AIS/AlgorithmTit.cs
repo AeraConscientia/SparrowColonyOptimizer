@@ -6,6 +6,7 @@ namespace AIS
 {
     public class AlgorithmTit
     {
+        //Tit Alg 2.0
         public int NP;
         public double alpha;
         public double gamma;
@@ -101,21 +102,45 @@ namespace AIS
                         }
                     }
 
+                    CheckBorders();
+
                     best.fitness = function(best.coords[0], best.coords[1],f);
 
                     I[0] = best;
 
                     for (int i = 1; i < NP; i++)
                     {
+                        if (outOfBorders(I[i]))
+                            throw new Exception();
+
                         for (int j = 0; j < dim; j++)
                         {
                             double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
 
+                            double rnd = 0;
+                            int placeOfRepair = 0;
+
                             if (val < D[j, 0]) 
-                                val = (Math.Abs(D[j, 0]) + Math.Abs(best.coords[j])) * random.NextDouble() - Math.Abs(D[j, 0]);
+                            {
+                                placeOfRepair = 1;
+
+                                rnd = random.NextDouble();
+                                val = (best.coords[j] - D[j, 0]) * rnd + D[j, 0];
+                            }
 
                             if (val > D[j, 1])
-                                val = (Math.Abs(best.coords[j]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(best.coords[j]);
+                            {
+                                placeOfRepair = 2;
+
+                                rnd = random.NextDouble();
+                                val = (D[j, 1] - best.coords[j]) * rnd + best.coords[j];
+                            }
+                            
+                            if ((val > D[j, 1]))
+                                Console.WriteLine("111");
+
+                            if ((val < D[j, 0]))
+                                Console.WriteLine("111");
 
                             I[i].coords[j] = val;
                         }
@@ -149,13 +174,13 @@ namespace AIS
                 {
                     for (int j = 0; j < dim; j++)
                     {
-                        double val = I[0].coords[j] + r * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
+                        double val = I[0].coords[j] + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
 
                         if (val < D[j, 0])
-                            val = (Math.Abs(D[j, 0]) + Math.Abs(best.coords[j])) * random.NextDouble() - Math.Abs(D[j, 0]);
+                            val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
 
                         if (val > D[j, 1])
-                            val = (Math.Abs(best.coords[j]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(best.coords[j]);
+                            val = (D[j, 1] - best.coords[j]) * random.NextDouble() + best.coords[j];
 
                         I[i].coords[j] = val;
                     }
@@ -335,7 +360,7 @@ namespace AIS
                 for (int j = 0; j < dim; j++)
                 {
                     double val = random.NextDouble();
-                    val = ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * val - Math.Abs(D[j, 0]));
+                    val = ((Math.Abs(D[j, 1]) - Math.Abs(D[j, 0])) * val + Math.Abs(D[j, 0]));
                     Agent.coords[j] = val;
                 }
 
