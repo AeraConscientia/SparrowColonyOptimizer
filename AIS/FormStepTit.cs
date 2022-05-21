@@ -93,6 +93,16 @@ namespace AIS
             // TODO: Добавить в названия итерацию
         }
 
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBestLeader_Click(object sender, EventArgs e)
+        {
+            //На графике показать лучшую синицу
+        }
+
         /// <summary>Отрисовка стрелочек</summary>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {

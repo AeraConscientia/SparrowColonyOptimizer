@@ -73,6 +73,8 @@ namespace AIS
                     for (int i = 0; i < best.coords.dim; i++)
                         bestCoords[i] = best.coords[i];
 
+
+                    // >>>>> Положение Вожака
                     best.coords += (alpha / (k + 1)) * Levy();                      //Шаг 2.8
                     for (int j = 0; j < dim; j++)
                     {
@@ -91,10 +93,9 @@ namespace AIS
                             best.coords[j] = (NumTries > 10) ? ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0])) : tmp;
                         }
                     }
-
                     best.fitness = Function.function(best.coords[0], best.coords[1],f);
-
                     I[0] = best;
+                    // <<<<<< Положение Вожака
 
                     for (int i = 1; i < NP; i++)
                     {
@@ -321,6 +322,8 @@ namespace AIS
                 Agent.fitness = Function.function(Agent.coords[0], Agent.coords[1], f);
                 I.Add(Agent);
             }
+
+            I = I.OrderBy(t => t.fitness).ToList();
         }
     }
 }
