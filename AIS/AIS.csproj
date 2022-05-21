@@ -95,6 +95,7 @@
     <Compile Include="FormStepTit.Designer.cs">
       <DependentUpon>FormStepTit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Function.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tit.cs" />
