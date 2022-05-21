@@ -18,6 +18,8 @@ namespace AIS
         private Tit resultBest;
         private double[,] obl = new double[2, 2];
 
+        private const int NumOfStarts = 100;
+
         List<Vector> exactPoints = new List<Vector>();
 
         /// <summary>Размер популяции</summary>
@@ -91,47 +93,41 @@ namespace AIS
             dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "α";
-            dataGridView2.Rows[1].Cells[1].Value = 0.0001.ToString();
+            dataGridView2.Rows[1].Cells[0].Value = "ϒ"; 
+            dataGridView2.Rows[1].Cells[1].Value = 0.75.ToString();
 
-            dataGridView2.Rows[2].Cells[0].Value = "ϒ"; 
-            dataGridView2.Rows[2].Cells[1].Value = 0.75.ToString();
+            dataGridView2.Rows[2].Cells[0].Value = "η";
+            dataGridView2.Rows[2].Cells[1].Value = 0.9.ToString();
 
-            dataGridView2.Rows[3].Cells[0].Value = "η";
-            dataGridView2.Rows[3].Cells[1].Value = 0.9.ToString();
+            dataGridView2.Rows[3].Cells[0].Value = "Радиус окрестности ро";
+            dataGridView2.Rows[3].Cells[1].Value = 5;   
 
-            dataGridView2.Rows[4].Cells[0].Value = "λ";
-            dataGridView2.Rows[4].Cells[1].Value = 1.5.ToString();
+            dataGridView2.Rows[4].Cells[0].Value = "c3";
+            dataGridView2.Rows[4].Cells[1].Value = 5;
 
-            dataGridView2.Rows[5].Cells[0].Value = "Радиус окрестности ро";
-            dataGridView2.Rows[5].Cells[1].Value = 5;   
+            dataGridView2.Rows[5].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[5].Cells[1].Value = 10;
 
-            dataGridView2.Rows[6].Cells[0].Value = "c3";
-            dataGridView2.Rows[6].Cells[1].Value = 5;
+            dataGridView2.Rows[6].Cells[0].Value = "h";
+            dataGridView2.Rows[6].Cells[1].Value = 0.1.ToString();
 
-            dataGridView2.Rows[7].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[7].Cells[0].Value = "L";
             dataGridView2.Rows[7].Cells[1].Value = 10;
 
-            dataGridView2.Rows[8].Cells[0].Value = "h";
-            dataGridView2.Rows[8].Cells[1].Value = 0.1.ToString();
+            dataGridView2.Rows[8].Cells[0].Value = "P";
+            dataGridView2.Rows[8].Cells[1].Value = 30;
 
-            dataGridView2.Rows[9].Cells[0].Value = "L";
-            dataGridView2.Rows[9].Cells[1].Value = 10;
+            dataGridView2.Rows[9].Cells[0].Value = "mu";
+            dataGridView2.Rows[9].Cells[1].Value = 5;
 
             dataGridView2.Rows[10].Cells[0].Value = "P";
             dataGridView2.Rows[10].Cells[1].Value = 30;
 
-            dataGridView2.Rows[11].Cells[0].Value = "mu";
+            dataGridView2.Rows[11].Cells[0].Value = "µ";
             dataGridView2.Rows[11].Cells[1].Value = 5;
 
-            dataGridView2.Rows[12].Cells[0].Value = "P";
-            dataGridView2.Rows[12].Cells[1].Value = 30;
-
-            dataGridView2.Rows[13].Cells[0].Value = "µ";
-            dataGridView2.Rows[13].Cells[1].Value = 5;
-
-            dataGridView2.Rows[14].Cells[0].Value = "ε";
-            dataGridView2.Rows[14].Cells[1].Value = 0.000000001.ToString();
+            dataGridView2.Rows[12].Cells[0].Value = "ε";
+            dataGridView2.Rows[12].Cells[1].Value = 0.000000001.ToString();
 
             //СТАРОЕ
 
