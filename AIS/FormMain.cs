@@ -89,7 +89,7 @@ namespace AIS
             dataGridView1.Rows[0].Cells[0].Value = "x";
             dataGridView1.Rows[1].Cells[0].Value = "y";
 
-            dataGridView2.RowCount = 14;
+            dataGridView2.RowCount = 13;
             dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
@@ -126,11 +126,8 @@ namespace AIS
             dataGridView2.Rows[11].Cells[0].Value = "mu";
             dataGridView2.Rows[11].Cells[1].Value = 5;
 
-            dataGridView2.Rows[12].Cells[0].Value = "µ";
-            dataGridView2.Rows[12].Cells[1].Value = 5;
-
-            dataGridView2.Rows[13].Cells[0].Value = "ε";
-            dataGridView2.Rows[13].Cells[1].Value = 0.000000001.ToString();
+            dataGridView2.Rows[12].Cells[0].Value = "ε";
+            dataGridView2.Rows[12].Cells[1].Value = 0.000000001.ToString();
 
             //СТАРОЕ
 
