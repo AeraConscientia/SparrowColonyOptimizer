@@ -22,7 +22,7 @@ namespace AIS
         public double mu;
         public double eps;
         public Tit best;
-        public List<Tit> I = new List<Tit>();
+        public List<Tit> I = new List<Tit>();                       //Текущее множество синиц
         public List<Tit> search_tits = new List<Tit> ();            //Массив лучших положений всех синиц после скачков (см. Шаг 2.6)
         public List<Tit> Pool = new List<Tit>();
         public List<Tit> memory;
@@ -36,6 +36,7 @@ namespace AIS
         public Tit StartAlg(int NP, double alpha, double gamma, double lambda, double eta, double rho, double c1, double c2, double c3,
             double K, double h, double L, double P, double mu, double eps, double[,] D, int f) 
         {
+            //Шаг 1.1
             this.NP = NP;
             this.alpha = alpha;
             this.gamma = gamma;
@@ -53,29 +54,37 @@ namespace AIS
             this.eps = eps;
             this.D = D;
             this.f = f;
+            double r = 1;
 
             Initilize();
             InitalPopulationGeneration();       //Шаг 1.2
 
-            double r = 1;
-
             for (int p = 0; p < P; p++)
             {
                 //Диффузионный поиск со скачками
-                int k = 0;              //Шаг 2.1
+                int k = 0;                      //Шаг 2.1
                 do
                 {
                     I = I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
-                    best = I[0];                                //same
-                    ProcessInfoAboutFlock();                    //Шаг 2.3-2.7
+                    best = I[0];                                //x^1,k
+                    ProcessInfoAboutFlock();                    //Шаг 2.3
+                    SolveStohasticDiffEq();                     //Шаг 2.4-2.6
 
+                    if ((k < K) && (Math.Pow(r, k) < eps))                          //Шаг 2.7
+                    {
+                        Pool.Add(memory.OrderBy(t => t.fitness).ToList()[0]);       //Шаг 2.7 K=k
+                        break;
+                    }
+
+                    r *= gamma;
+                    ++k;
+
+                    // >>>>> Положение Вожака       Шаг 2.8
                     Vector bestCoords = new Vector(best.coords.dim);
                     for (int i = 0; i < best.coords.dim; i++)
                         bestCoords[i] = best.coords[i];
 
-
-                    // >>>>> Положение Вожака
-                    best.coords += (alpha / (k + 1)) * Levy();                      //Шаг 2.8
+                    best.coords += (alpha / (k + 1)) * Levy();                      
                     for (int j = 0; j < dim; j++)
                     {
                         if ((best.coords[j] < D[j, 0]) || (best.coords[j] > D[j, 1]))
@@ -90,18 +99,19 @@ namespace AIS
                                 ++NumTries;
                             } while (((tmp < D[j, 0]) || (tmp > D[j, 1])) && (NumTries <= 10));
 
-                            best.coords[j] = (NumTries > 10) ? ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0])) : tmp;
+                            best.coords[j] = (NumTries > 10) ? ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]) : tmp;
                         }
                     }
                     best.fitness = Function.function(best.coords[0], best.coords[1],f);
-                    I[0] = best;
+                    I[0] = best;            //?
                     // <<<<<< Положение Вожака
-
+                    
+                    //Шаг 2.9
                     for (int i = 1; i < NP; i++)
                     {
                         for (int j = 0; j < dim; j++)
                         {
-                            double val = best.coords[j] + Math.Pow(r, k) * ((Math.Abs(D[j, 0]) + Math.Abs(D[j, 1])) * random.NextDouble() - Math.Abs(D[j, 0]));
+                            double val = best.coords[j] - 0.5*(D[j,1] + D[j,0]) + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
 
                             if (val < D[j, 0]) 
                                 val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
@@ -112,18 +122,12 @@ namespace AIS
                             I[i].coords[j] = val;
                         }
                         I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
-
-                        if (I[i].fitness < I[i].best.fitness)
-                            I[i].best = I[i];
                     }
-                    r *= gamma;
-                    ++k;
-                } while ((k < K) && (Math.Pow(r, k) < eps));
+                } while (true);
 
-                Pool.Add(memory.OrderBy(t => t.fitness).ToList()[0]);       //2.10
-                memory = new List<Tit>();
 
                 r = Math.Pow(eta, p);           //Шаг 3
+                memory = new List<Tit>();
 
                 I[0] = Pool.OrderBy(t => t.fitness).ToList()[0];
                 I[0].fitness = Function.function(I[0].coords[0], I[0].coords[1], f);
@@ -132,7 +136,7 @@ namespace AIS
                 {
                     for (int j = 0; j < dim; j++)
                     {
-                        double val = I[0].coords[j] + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
+                        double val = I[0].coords[j] - 0.5*(D[j,1] + D[j,0]) + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
 
                         if (val < D[j, 0])
                             val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
@@ -144,9 +148,6 @@ namespace AIS
                     }
 
                     I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
-
-                    if (I[i].fitness < I[i].best.fitness)
-                        I[i].best = I[i];
                 }
             }
 
@@ -208,70 +209,80 @@ namespace AIS
         {
             for (int j = 1; j < NP; j++)
             {
+                if (I[j].fitness < I[j].best.fitness)
+                    I[j].best = I[j];
+
                 FindLocalBest(I[j]);
-                SolveStohasticDiffEq(I[j]);
             }
+        }
+
+
+        private void SolveStohasticDiffEq()
+        {
+            for (int j = 1; j < NP; j++)
+            {
+                Tit current_tit = I[j];
+
+                List<Tit> search = new List<Tit>(); //список всех скачков
+                search.Add(I[j]);        //x^j,k (0)
+                for (int l = 0; l < L; l++)
+                {
+                    Tit new_tit = new Tit(I[j].coords.dim);
+
+                    double r1 = random.NextDouble();
+                    double r2 = random.NextDouble();
+                    double r3 = random.NextDouble();
+                    double alpha1 = random.NextDouble();
+                    double alpha2 = random.NextDouble();
+                    double beta = random.NextDouble();
+                    double ksi = Math.Sqrt(-2 * Math.Log(alpha1)) * Math.Cos(2 * Math.PI * alpha2);
+
+                    Vector f = c1 * r1 * (best.coords - current_tit.coords);
+                    Vector sigma = c2 * r2 * (I[j].best.coords - current_tit.coords) + c3 * r3 * (I[j].local_best.coords - current_tit.coords);
+
+                    new_tit.coords = current_tit.coords + h * f + Math.Sqrt(h) * sigma * ksi;
+                    new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
+
+                    if (beta < mu * h)
+                    {
+                        Vector Thetta = new Vector(I[j].coords.dim);
+                        for (int i = 0; i < I[j].coords.dim; i++)
+                        {
+                            double delta_i = Math.Min(D[i, 1] - new_tit.coords[i], new_tit.coords[i] - D[i, 0]);
+                            Thetta[i] = random.NextDouble() * 2 * delta_i - delta_i;
+                        }
+
+                        new_tit.coords += Thetta;
+                        new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
+                    }
+
+                    //проверка выхода за границы (оставить по алгоритму)
+                    for (int i = 0; i < dim; i++)
+                    {
+                        if (new_tit.coords[i] < D[i, 0])
+                            new_tit.coords[i] = D[i, 0];
+
+                        if (new_tit.coords[i] > D[i, 1])
+                            new_tit.coords[i] = D[i, 1];
+                    }
+
+                    search.Add(new_tit);   //x^j,k (l)
+                    current_tit = new_tit;
+                }
+
+                search = search.OrderBy(t => t.fitness).ToList();
+                search_tits.Add(search[0]);
+            }
+            
+            //>>>>>>>>Шаг 2.6
             search_tits.Add(best);
             search_tits = search_tits.OrderBy(t => t.fitness).ToList();
             memory.Add(search_tits[0]);
-            best = search_tits[0];
+            best = search_tits[0];      
+            //<<<<<<<<
         }
 
-        private void SolveStohasticDiffEq(Tit tit)
-        {
-            Tit current_tit = tit;
-
-            List<Tit> search = new List<Tit>(); //список всех скачков
-            search.Add(tit);        //x^j,k (0)
-            for (int l = 0; l < L; l++)
-            {
-                Tit new_tit = new Tit(tit.coords.dim);
-
-                double r1 = random.NextDouble();
-                double r2 = random.NextDouble();
-                double r3 = random.NextDouble();
-                double alpha1 = random.NextDouble();
-                double alpha2 = random.NextDouble();
-                double beta = random.NextDouble();
-                double ksi = Math.Sqrt(-2 * Math.Log(alpha1)) * Math.Cos(2 * Math.PI * alpha2);
-
-                Vector f = c1 * r1 * (best.coords - current_tit.coords);
-                Vector sigma = c2 * r2 * (tit.best.coords - current_tit.coords) + c3 * r3 * (tit.local_best.coords - current_tit.coords);
-
-                new_tit.coords = current_tit.coords + h * f + Math.Sqrt(h) * sigma * ksi;
-                new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
-
-                if (beta < mu * h)
-                {
-                    Vector Thetta = new Vector(tit.coords.dim);
-                    for (int i = 0; i < tit.coords.dim; i++)
-                    {
-                        double delta_i = Math.Min(D[i, 1] - new_tit.coords[i], new_tit.coords[i] - D[i, 0]);
-                        Thetta[i] = random.NextDouble() * 2 * delta_i - delta_i;        
-                    }
-                    
-                    new_tit.coords += Thetta;
-                    new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
-                }
-
-                //проверка выхода за границы (оставить по алгоритму)
-                for (int i = 0; i < dim; i++)
-                {
-                    if (new_tit.coords[i] < D[i, 0])
-                        new_tit.coords[i] = D[i, 0];
-
-                    if (new_tit.coords[i] > D[i, 1])
-                        new_tit.coords[i] = D[i, 1];
-                }
-
-                search.Add(new_tit);   //x^j,k (l)
-                current_tit = new_tit;
-            }
-
-            search = search.OrderBy(t => t.fitness).ToList();
-            search_tits.Add(search[0]);
-        }
-
+        //Шаг 2.3   +
         public void FindLocalBest(Tit tit)
         {
             foreach (Tit item in I)
@@ -291,11 +302,11 @@ namespace AIS
             }
         }
 
+        //+
         public void InitalPopulationGeneration()
         {
             for (int i = 0; i < NP; i++)
             {
-
                 Tit Agent = new Tit(dim);
                 for (int j = 0; j < dim; j++)
                 {
@@ -307,8 +318,6 @@ namespace AIS
                 Agent.fitness = Function.function(Agent.coords[0], Agent.coords[1], f);
                 I.Add(Agent);
             }
-
-            I = I.OrderBy(t => t.fitness).ToList();
         }
     }
 }

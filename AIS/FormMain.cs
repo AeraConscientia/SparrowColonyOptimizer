@@ -18,7 +18,7 @@ namespace AIS
         private Tit resultBest;
         private double[,] obl = new double[2, 2];
 
-        private const int NumOfStarts = 1;
+        private const int NumOfStarts = 100;
 
         List<Vector> exactPoints = new List<Vector>();
 
