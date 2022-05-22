@@ -160,19 +160,6 @@ namespace AIS
             memory = new List<Tit>();
         }
 
-        private void CheckBorders()
-        {
-            foreach (var tit in I)
-            {
-                if (outOfBorders(tit))
-                        throw new Exception("Выход за границы координаты");
-                if (outOfBorders(tit.local_best))
-                        throw new Exception("Выход за границы лучшего локального");
-                if (outOfBorders(tit.best))
-                        throw new Exception("Выход за границы лучшего за итерации");
-            }
-        }
-
         private bool outOfBorders(Tit tit)
         {
             for (int i = 0; i < dim; i++)
@@ -222,9 +209,7 @@ namespace AIS
             for (int j = 1; j < NP; j++)
             {
                 FindLocalBest(I[j]);
-                CheckBorders();
                 SolveStohasticDiffEq(I[j]);
-                CheckBorders();
             }
             search_tits.Add(best);
             search_tits = search_tits.OrderBy(t => t.fitness).ToList();
@@ -269,7 +254,7 @@ namespace AIS
                     new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
                 }
 
-                //проверка выхода за границы
+                //проверка выхода за границы (оставить по алгоритму)
                 for (int i = 0; i < dim; i++)
                 {
                     if (new_tit.coords[i] < D[i, 0])
@@ -287,7 +272,7 @@ namespace AIS
             search_tits.Add(search[0]);
         }
 
-        private void FindLocalBest(Tit tit)
+        public void FindLocalBest(Tit tit)
         {
             foreach (Tit item in I)
             {

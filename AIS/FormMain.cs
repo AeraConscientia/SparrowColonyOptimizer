@@ -49,7 +49,6 @@ namespace AIS
         double mu;
         double eps;
         double[,] D;
-        
 
         //Не мое
         private bool[] flines = new bool[8];

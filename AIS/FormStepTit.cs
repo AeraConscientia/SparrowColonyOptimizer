@@ -100,7 +100,9 @@ namespace AIS
 
         private void buttonBestLeader_Click(object sender, EventArgs e)
         {
-            //На графике показать лучшую синицу
+            for (int j = 1; j < NP; j++)
+                algo.FindLocalBest(algo.I[j]);
+
         }
 
         /// <summary>Отрисовка стрелочек</summary>

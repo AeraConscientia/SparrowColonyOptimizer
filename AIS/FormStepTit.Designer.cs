@@ -279,7 +279,7 @@
             // 
             this.buttonInitalGeneration.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonInitalGeneration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonInitalGeneration.Location = new System.Drawing.Point(36, 38);
+            this.buttonInitalGeneration.Location = new System.Drawing.Point(31, 47);
             this.buttonInitalGeneration.Name = "buttonInitalGeneration";
             this.buttonInitalGeneration.Size = new System.Drawing.Size(95, 53);
             this.buttonInitalGeneration.TabIndex = 43;
