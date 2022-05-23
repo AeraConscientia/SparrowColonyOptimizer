@@ -70,6 +70,7 @@ namespace AIS
 
         public AlgorithmTit algo = new AlgorithmTit();
 
+
         public double[,] showobl = new double[2, 2];
 
         bool flag = false;
@@ -108,6 +109,7 @@ namespace AIS
                     D = obl
                 };
 
+                algo.r = 1;
                 algo.Initilize();
                 algo.InitalPopulationGeneration();
                 p = 0;
@@ -120,6 +122,7 @@ namespace AIS
                 buttonInitalGeneration.Enabled = false;
                 Red[1] = true;
                 buttonBestLeader.Enabled = true;
+                buttonNIter.Enabled = true;
             }
         }
 
@@ -155,6 +158,7 @@ namespace AIS
             buttonBestLeader.Enabled = false;
             Red[2] = true;
             button6.Enabled = true;
+            buttonNIter.Enabled = false; 
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -206,7 +210,7 @@ namespace AIS
                 }
             }
             algo.best.fitness = Function.function(algo.best.coords[0], algo.best.coords[1], algo.f);
-            algo.I[0] =  new Tit(algo.best);            //?
+            algo.I[0] =  new Tit(algo.best);
 
             Red[3] = false;
             button7.Enabled = false;
@@ -243,12 +247,16 @@ namespace AIS
             button8.Enabled = false;
             Red[1] = true;
             buttonBestLeader.Enabled = true;
+            buttonNIter.Enabled = true;
         }
 
         private void buttonEndCondition_Click(object sender, EventArgs e)
         {
             Red[6] = false;
             buttonEndCondition.Enabled = false;
+
+            algo.bestFitness.Add(algo.Pool.OrderBy(t=>t.fitness).ToList()[0].fitness);
+            algo.AverageFitness();
 
             if (p >= algo.P)
             {
@@ -266,13 +274,17 @@ namespace AIS
                 ++p;
             }
 
-
             pictureBox1.Refresh();
+            chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+            chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
+            chart1.Refresh();
+
+            iterationGraph++;
         }
 
         private void buttonNewGeneraton_Click(object sender, EventArgs e)
         {
-            algo.I[0] = algo.Pool.OrderBy(t => t.fitness).ToList()[0];
+            algo.I[0] = new Tit(algo.Pool.OrderBy(t => t.fitness).ToList()[0]);
             algo.I[0].fitness = Function.function(algo.I[0].coords[0], algo.I[0].coords[1], algo.f);
 
             for (int i = 1; i < NP; i++)
@@ -300,6 +312,12 @@ namespace AIS
             buttonNewGeneraton.Enabled = false;
             Red[1] = true;
             buttonBestLeader.Enabled = true;
+            buttonNIter.Enabled = true;
+        }
+
+        private void buttonNIter_Click(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>Отрисовка стрелочек</summary>
@@ -567,6 +585,9 @@ namespace AIS
                 if (algo.Pool.Count != 0)
                     for (int i = 0; i < algo.Pool.Count; i++)
                         e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.Pool[i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.Pool[i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+
+                if (algo.best != null)
+                    e.Graphics.FillEllipse(Brushes.Red, (float)((algo.best.coords[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algo.best.coords[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
             }
 
             for (int i = -6; i < 12; i++)

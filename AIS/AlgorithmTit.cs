@@ -7,6 +7,12 @@ namespace AIS
     public class AlgorithmTit
     {
         //Tit Alg 2.0
+
+        /// <summary>Массив средней приспособленности</summary>
+        public List<double> averageFitness = new List<double>();
+        /// <summary>Массив лучшей приспособленности</summary>
+        public List<double> bestFitness = new List<double>();
+
         public int NP;
         public double alpha;
         public double gamma;
@@ -282,6 +288,17 @@ namespace AIS
             memory.Add(search_tits[0]);
             best = search_tits[0];      
             //<<<<<<<<
+        }
+
+        public double AverageFitness()
+        {
+            double sum = 0;
+            for (int i = 0; i < NP; i++)
+                sum += I[i].fitness;
+
+            double fitness = (sum / NP);
+            averageFitness.Add(fitness);
+            return fitness;
         }
 
         //Шаг 2.3   +
