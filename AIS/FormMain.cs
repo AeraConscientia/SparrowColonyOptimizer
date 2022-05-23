@@ -181,7 +181,6 @@ namespace AIS
                     resultBest = algTit.StartAlg(NP, alpha, gamma, lambda, eta, rho, c1, c2, c3, K, h, L, P, mu, eps, obl, z);
                     flag2 = true;
 
-
                     //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
                     dataGridView3.Rows[0].Cells[1].Value = string.Format($"{resultBest.coords[0]:F8}");
                     dataGridView3.Rows[1].Cells[1].Value = string.Format($"{resultBest.coords[1]:F8}");

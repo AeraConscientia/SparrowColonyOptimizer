@@ -138,13 +138,13 @@ namespace AIS
             Red[8] = false;
             buttonAnswer.Enabled = false;
             flag = false;
-            algo.best = algo.Pool.OrderBy(t => t.fitness).ToList()[0];
+            algo.best = new Tit(algo.Pool.OrderBy(t => t.fitness).ToList()[0]);
         }
 
         private void buttonBestLeader_Click(object sender, EventArgs e)
         {
             algo.I = algo.I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
-            algo.best = algo.I[0];                                //x^1,k
+            algo.best = new Tit(algo.I[0]);                                //x^1,k
             algo.ProcessInfoAboutFlock();                    //Шаг 2.3
             algo.SolveStohasticDiffEq();                     //Шаг 2.4-2.6
 
@@ -164,7 +164,7 @@ namespace AIS
 
             if ((k >= algo.K) || (Math.Pow(algo.r, k) < eps))                          //Шаг 2.7
             {
-                algo.Pool.Add(algo.memory.OrderBy(t => t.fitness).ToList()[0]);       //Шаг 2.7 K=k
+                algo.Pool.Add(new Tit(algo.memory.OrderBy(t => t.fitness).ToList()[0]));       //Шаг 2.7 K=k
                 Red[6] = true;
                 buttonEndCondition.Enabled = true;
             }
@@ -206,7 +206,7 @@ namespace AIS
                 }
             }
             algo.best.fitness = Function.function(algo.best.coords[0], algo.best.coords[1], algo.f);
-            algo.I[0] = algo.best;            //?
+            algo.I[0] =  new Tit(algo.best);            //?
 
             Red[3] = false;
             button7.Enabled = false;

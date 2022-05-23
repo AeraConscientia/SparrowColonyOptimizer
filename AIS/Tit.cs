@@ -29,8 +29,8 @@ namespace AIS
         {
             coords = new Vector(previousTit.coords);
             fitness = previousTit.fitness;
-            best = new Tit(previousTit.best);
-            local_best = new Tit(previousTit.local_best);
+            best = previousTit.best;
+            local_best = previousTit.local_best;
             dim = previousTit.dim;
         }
     }

@@ -67,13 +67,13 @@ namespace AIS
                 do
                 {
                     I = I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
-                    best = I[0];                                //x^1,k
+                    best = new Tit(I[0]);                       //x^1,k
                     ProcessInfoAboutFlock();                    //Шаг 2.3
                     SolveStohasticDiffEq();                     //Шаг 2.4-2.6
 
-                    if ((k >= K) || (Math.Pow(r, k) < eps))                          //Шаг 2.7
+                    if ((k >= K) || (Math.Pow(r, k) < eps))     //Шаг 2.7
                     {
-                        Pool.Add(memory.OrderBy(t => t.fitness).ToList()[0]);       //Шаг 2.7 K=k
+                        Pool.Add(new Tit(memory.OrderBy(t => t.fitness).ToList()[0]));                       //Шаг 2.7 K=k
                         break;
                     }
 
@@ -104,9 +104,8 @@ namespace AIS
                         }
                     }
                     best.fitness = Function.function(best.coords[0], best.coords[1],f);
-                    I[0] = best;            //?
+                    I[0] = new Tit(best);
                     // <<<<<< Положение Вожака
-                    
                     //Шаг 2.9
                     for (int i = 1; i < NP; i++)
                     {
@@ -126,11 +125,10 @@ namespace AIS
                     }
                 } while (true);
 
-
                 r = Math.Pow(eta, p);           //Шаг 3
                 memory = new List<Tit>();
 
-                I[0] = Pool.OrderBy(t => t.fitness).ToList()[0];
+                I[0] = new Tit(Pool.OrderBy(t => t.fitness).ToList()[0]);
                 I[0].fitness = Function.function(I[0].coords[0], I[0].coords[1], f);
 
                 for (int i = 1; i < NP; i++)
@@ -151,7 +149,6 @@ namespace AIS
                     I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
                 }
             }
-
             return Pool.OrderBy(t => t.fitness).ToList()[0];        //Шаг 4
         }
 
@@ -211,7 +208,7 @@ namespace AIS
             for (int j = 1; j < NP; j++)
             {
                 if (I[j].fitness < I[j].best.fitness)
-                    I[j].best = I[j];
+                    I[j].best = new Tit(I[j]);
 
                 FindLocalBest(I[j]);
             }
@@ -223,10 +220,9 @@ namespace AIS
 
             for (int j = 1; j < NP; j++)
             {
-                Tit current_tit = I[j];
+                Tit current_tit = new Tit(I[j]);
 
                 List<Tit> search = new List<Tit>(); //список всех скачков
-
 
                 search.Add(I[j]);        //x^j,k (0)
                 for (int l = 0; l < L; l++)
@@ -241,12 +237,12 @@ namespace AIS
                     double beta = random.NextDouble();
                     double ksi = Math.Sqrt(-2 * Math.Log(alpha1)) * Math.Cos(2 * Math.PI * alpha2);
 
-                    Vector f = c1 * r1 * (best.coords - current_tit.coords);
-                    Vector sigma = c2 * r2 * (I[j].best.coords - current_tit.coords) + c3 * r3 * (I[j].local_best.coords - current_tit.coords);
+                    Vector f = new Vector(c1 * r1 * (best.coords - current_tit.coords));
+                    Vector sigma = new Vector(c2 * r2 * (I[j].best.coords - current_tit.coords) + c3 * r3 * (I[j].local_best.coords - current_tit.coords));
 
-                    new_tit.coords = current_tit.coords + h * f + Math.Sqrt(h) * sigma * ksi;
+                    new_tit.coords = new Vector(current_tit.coords + h * f + Math.Sqrt(h) * sigma * ksi);
                     new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
-
+                    
                     if (beta < mu * h)
                     {
                         Vector Thetta = new Vector(I[j].coords.dim);
@@ -270,8 +266,10 @@ namespace AIS
                             new_tit.coords[i] = D[i, 1];
                     }
 
+                    new_tit.fitness = Function.function(new_tit.coords[0], new_tit.coords[1], this.f);
+
                     search.Add(new_tit);   //x^j,k (l)
-                    current_tit = new_tit;
+                    current_tit = new Tit(new_tit);
                 }
 
                 search = search.OrderBy(t => t.fitness).ToList();
@@ -302,7 +300,7 @@ namespace AIS
                 }
                 if (ok == true)
                     if (item.fitness < tit.local_best.fitness)
-                        tit.local_best = item;
+                        tit.local_best = new Tit(item);
             }
         }
 
