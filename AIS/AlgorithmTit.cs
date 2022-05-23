@@ -26,12 +26,13 @@ namespace AIS
         public List<Tit> search_tits = new List<Tit> ();            //Массив лучших положений всех синиц после скачков (см. Шаг 2.6)
         public List<Tit> Pool = new List<Tit>();
         public List<Tit> memory;
+        public double r;
 
-        private int dim;
-        private int f;
+        public int dim;
+        public int f;
         public double[,] D;
 
-        Random random;
+        public Random random;
 
         public Tit StartAlg(int NP, double alpha, double gamma, double lambda, double eta, double rho, double c1, double c2, double c3,
             double K, double h, double L, double P, double mu, double eps, double[,] D, int f) 
@@ -54,7 +55,7 @@ namespace AIS
             this.eps = eps;
             this.D = D;
             this.f = f;
-            double r = 1;
+            r = 1;
 
             Initilize();
             InitalPopulationGeneration();       //Шаг 1.2
@@ -70,7 +71,7 @@ namespace AIS
                     ProcessInfoAboutFlock();                    //Шаг 2.3
                     SolveStohasticDiffEq();                     //Шаг 2.4-2.6
 
-                    if ((k < K) && (Math.Pow(r, k) < eps))                          //Шаг 2.7
+                    if ((k >= K) || (Math.Pow(r, k) < eps))                          //Шаг 2.7
                     {
                         Pool.Add(memory.OrderBy(t => t.fitness).ToList()[0]);       //Шаг 2.7 K=k
                         break;
@@ -174,7 +175,7 @@ namespace AIS
             return false;
         }
 
-        private Vector Levy()
+        public Vector Levy()
         {
             Vector res = new Vector(dim);
             for (int i = 0; i < dim; i++) 
@@ -205,7 +206,7 @@ namespace AIS
             return y;
         }
 
-        private void ProcessInfoAboutFlock()
+        public void ProcessInfoAboutFlock()
         {
             for (int j = 1; j < NP; j++)
             {
@@ -216,14 +217,17 @@ namespace AIS
             }
         }
 
-
-        private void SolveStohasticDiffEq()
+        public void SolveStohasticDiffEq()
         {
+            search_tits = new List<Tit>();      //TODO: Может, стоит убрать!
+
             for (int j = 1; j < NP; j++)
             {
                 Tit current_tit = I[j];
 
                 List<Tit> search = new List<Tit>(); //список всех скачков
+
+
                 search.Add(I[j]);        //x^j,k (0)
                 for (int l = 0; l < L; l++)
                 {

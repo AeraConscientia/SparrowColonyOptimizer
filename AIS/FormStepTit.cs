@@ -12,6 +12,9 @@ namespace AIS
 {
     public partial class FormStepTit : Form
     {
+        int p = 0;
+        int k = 0;
+
         public FormStepTit(int z, double[,] obl, int NP, double alpha, double gamma, double lambda, double eta, double rho, double c1, double c2, double c3,
             double K, double h, double L, double P, double mu, double eps, double exact)
         {
@@ -50,9 +53,6 @@ namespace AIS
         public double P;
         public double mu;
         public double eps;
-        public List<Tit> memory;
-
-        private int dim;
 
         double exact;
 
@@ -66,7 +66,7 @@ namespace AIS
         public double[,] showoblbase = new double[2, 2];
         public double[,] oblbase = new double[2, 2];
         public double[,] obl;
-        public int stepsCount = 9; // TODO: Что это вообще?
+        public const int stepsCount = 9;
 
         public AlgorithmTit algo = new AlgorithmTit();
 
@@ -74,19 +74,59 @@ namespace AIS
 
         bool flag = false;
         /// <summary>Массив состояний</summary>
-        bool[] Red = new bool[9];
+        bool[] Red = new bool[stepsCount];
 
         public int iterationGraph = 0;
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonInitilize_Click(object sender, EventArgs e)
         {
-            algo.Initilize();
-            algo.InitalPopulationGeneration();
+            if (!flag)
+            {
+                //заполнение массива состояний
+                Red[0] = true;
+                for (int i = 1; i < stepsCount; i++)
+                    Red[i] = false;
+
+                flag = true;    //Начало работы алгоритма
+
+                algo = new AlgorithmTit
+                {
+                    NP = NP,
+                    alpha = alpha,
+                    gamma = gamma,
+                    lambda = lambda,
+                    eta = eta,
+                    rho = rho,
+                    c1 = c1, c2 = c2, c3 = c3,
+                    K=K,
+                    h= h,
+                    L = L,
+                    P = P,
+                    mu = mu,
+                    eps = eps,
+                    f = z,
+                    D = obl
+                };
+
+                algo.Initilize();
+                algo.InitalPopulationGeneration();
+                p = 0;
+                k = 0;
+
+                pictureBox1.Refresh();
+                pictureBox2.Refresh();
+
+                Red[0] = false;
+                buttonInitalGeneration.Enabled = false;
+                Red[1] = true;
+                buttonBestLeader.Enabled = true;
+            }
         }
 
         /// <summary>Сохранение графика приспособленности и положения стаи</summary>
         private void buttonSavePictures_Click(object sender, EventArgs e)
         {
+            
             chart1.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
             if (pictureBox2.Image != null)
                 pictureBox2.Image.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //pictureBox2.Image.Save($"Iteration{Iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
@@ -95,14 +135,171 @@ namespace AIS
 
         private void button11_Click(object sender, EventArgs e)
         {
-
+            Red[8] = false;
+            buttonAnswer.Enabled = false;
+            flag = false;
+            algo.best = algo.Pool.OrderBy(t => t.fitness).ToList()[0];
         }
 
         private void buttonBestLeader_Click(object sender, EventArgs e)
         {
-            for (int j = 1; j < NP; j++)
-                algo.FindLocalBest(algo.I[j]);
+            algo.I = algo.I.OrderBy(t => t.fitness).ToList();     //Шаг 2.2
+            algo.best = algo.I[0];                                //x^1,k
+            algo.ProcessInfoAboutFlock();                    //Шаг 2.3
+            algo.SolveStohasticDiffEq();                     //Шаг 2.4-2.6
 
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+
+            Red[1] = false;
+            buttonBestLeader.Enabled = false;
+            Red[2] = true;
+            button6.Enabled = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Red[2] = false;
+            button6.Enabled = false;
+
+            if ((k >= algo.K) || (Math.Pow(algo.r, k) < eps))                          //Шаг 2.7
+            {
+                algo.Pool.Add(algo.memory.OrderBy(t => t.fitness).ToList()[0]);       //Шаг 2.7 K=k
+                Red[6] = true;
+                buttonEndCondition.Enabled = true;
+            }
+            else
+            {
+                Red[3] = true;
+                button7.Enabled = true;
+            }
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            algo.r *= gamma;
+            ++k;
+
+            Vector bestCoords = new Vector(algo.best.coords.dim);
+            for (int i = 0; i < algo.best.coords.dim; i++)
+                bestCoords[i] = algo.best.coords[i];
+
+            algo.best.coords += (alpha / (k + 1)) * algo.Levy();
+            for (int j = 0; j < algo.dim; j++)
+            {
+                if ((algo.best.coords[j] < algo.D[j, 0]) || (algo.best.coords[j] > algo.D[j, 1]))
+                {
+                    int NumTries = 0;
+                    double tmp;
+                    do
+                    {
+                        tmp = (j % 2 == 0) ? algo.LeviX() : algo.LeviY();
+                        tmp *= (alpha / (k + 1));
+                        tmp += bestCoords[j];
+                        ++NumTries;
+                    } while (((tmp < algo.D[j, 0]) || (tmp > algo.D[j, 1])) && (NumTries <= 10));
+
+                    algo.best.coords[j] = (NumTries > 10) ? ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]) : tmp;
+                }
+            }
+            algo.best.fitness = Function.function(algo.best.coords[0], algo.best.coords[1], algo.f);
+            algo.I[0] = algo.best;            //?
+
+            Red[3] = false;
+            button7.Enabled = false;
+            Red[4] = true;
+            button8.Enabled = true;
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i < NP; i++)
+            {
+                for (int j = 0; j < algo.dim; j++)
+                {
+                    double val = algo.best.coords[j] - 0.5 * (algo.D[j, 1] + algo.D[j, 0]) + algo.r * ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]);
+
+                    if (val < algo.D[j, 0])
+                        val = (algo.best.coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
+
+                    if (val > algo.D[j, 1])
+                        val = (algo.D[j, 1] - algo.best.coords[j]) * algo.random.NextDouble() + algo.best.coords[j];
+
+                    algo.I[i].coords[j] = val;
+                }
+                algo.I[i].fitness = Function.function(algo.I[i].coords[0], algo.I[i].coords[1], algo.f);
+            }
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+
+            Red[4] = false;
+            button8.Enabled = false;
+            Red[1] = true;
+            buttonBestLeader.Enabled = true;
+        }
+
+        private void buttonEndCondition_Click(object sender, EventArgs e)
+        {
+            Red[6] = false;
+            buttonEndCondition.Enabled = false;
+
+            if (p >= algo.P)
+            {
+                Red[8] = true;
+                buttonResult.Enabled = true;
+            }
+            else 
+            {
+                Red[7] = true;
+                buttonNewGeneraton.Enabled = true;
+
+                k = 0;
+                algo.r = Math.Pow(eta, p);           //Шаг 3
+                algo.memory = new List<Tit>();
+                ++p;
+            }
+
+
+            pictureBox1.Refresh();
+        }
+
+        private void buttonNewGeneraton_Click(object sender, EventArgs e)
+        {
+            algo.I[0] = algo.Pool.OrderBy(t => t.fitness).ToList()[0];
+            algo.I[0].fitness = Function.function(algo.I[0].coords[0], algo.I[0].coords[1], algo.f);
+
+            for (int i = 1; i < NP; i++)
+            {
+                for (int j = 0; j < algo.dim; j++)
+                {
+                    double val = algo.I[0].coords[j] - 0.5 * (algo.D[j, 1] + algo.D[j, 0]) + algo.r * ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]);
+
+                    if (val < algo.D[j, 0])
+                        val = (algo.best.coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
+
+                    if (val > algo.D[j, 1])
+                        val = (algo.D[j, 1] - algo.best.coords[j]) * algo.random.NextDouble() + algo.best.coords[j];
+
+                    algo.I[i].coords[j] = val;
+                }
+
+                algo.I[i].fitness = Function.function(algo.I[i].coords[0], algo.I[i].coords[1], algo.f);
+            }
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+
+            Red[7] = false;
+            buttonNewGeneraton.Enabled = false;
+            Red[1] = true;
+            buttonBestLeader.Enabled = true;
         }
 
         /// <summary>Отрисовка стрелочек</summary>
@@ -354,7 +551,23 @@ namespace AIS
                     else if (((f2 < a12) || (f3 < a12) || (f4 < a12) || (f5 < a12) || (f6 < a12) || (f7 < a12) || (f8 < a12) || (f9 < a12)) && (f > a12) && (flines[7] == true)) e.Graphics.FillRectangle(Brushes.MediumOrchid, (float)(ii), (float)(h - jj), 1, 1);
                 }
 
-           
+            /////!!!!!/////
+            if (flag == true) 
+            {
+                if (algo.I.Count != 0)
+                    for (int i = 0; i < algo.NP; i++)
+                        e.Graphics.FillEllipse(Brushes.Green, (float)((algo.I[i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.I[i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+
+                if (Red[1] == true) 
+                {
+                    if (algo.search_tits.Count != 0)
+                        for (int i = 0; i < algo.search_tits.Count; i++)
+                        e.Graphics.FillEllipse(Brushes.Gray, (float)((algo.search_tits[i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.search_tits[i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                }
+                if (algo.Pool.Count != 0)
+                    for (int i = 0; i < algo.Pool.Count; i++)
+                        e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.Pool[i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.Pool[i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+            }
 
             for (int i = -6; i < 12; i++)
             {

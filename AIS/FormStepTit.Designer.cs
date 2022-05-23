@@ -51,8 +51,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonInitalGeneration = new System.Windows.Forms.Button();
             this.buttonBestLeader = new System.Windows.Forms.Button();
-            this.buttonPackMove = new System.Windows.Forms.Button();
-            this.buttonBestTitLeader = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -279,50 +277,31 @@
             // 
             this.buttonInitalGeneration.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonInitalGeneration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonInitalGeneration.Location = new System.Drawing.Point(31, 47);
+            this.buttonInitalGeneration.Location = new System.Drawing.Point(31, 48);
             this.buttonInitalGeneration.Name = "buttonInitalGeneration";
             this.buttonInitalGeneration.Size = new System.Drawing.Size(95, 53);
             this.buttonInitalGeneration.TabIndex = 43;
             this.buttonInitalGeneration.Text = "Генерация начальной популяции";
             this.buttonInitalGeneration.UseVisualStyleBackColor = true;
-            this.buttonInitalGeneration.Click += new System.EventHandler(this.button2_Click);
+            this.buttonInitalGeneration.Click += new System.EventHandler(this.buttonInitilize_Click);
             // 
             // buttonBestLeader
             // 
+            this.buttonBestLeader.Enabled = false;
             this.buttonBestLeader.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonBestLeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBestLeader.Location = new System.Drawing.Point(31, 122);
             this.buttonBestLeader.Name = "buttonBestLeader";
-            this.buttonBestLeader.Size = new System.Drawing.Size(95, 88);
+            this.buttonBestLeader.Size = new System.Drawing.Size(333, 88);
             this.buttonBestLeader.TabIndex = 44;
-            this.buttonBestLeader.Text = "Наилучшие достигнутые положения синиц (вожака)";
+            this.buttonBestLeader.Text = "Движение стаи и нахождение наилучших достигнутых положений синиц и вожака (стохас" +
+    "тические уравнения)";
             this.buttonBestLeader.UseVisualStyleBackColor = true;
             this.buttonBestLeader.Click += new System.EventHandler(this.buttonBestLeader_Click);
             // 
-            // buttonPackMove
-            // 
-            this.buttonPackMove.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonPackMove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPackMove.Location = new System.Drawing.Point(150, 122);
-            this.buttonPackMove.Name = "buttonPackMove";
-            this.buttonPackMove.Size = new System.Drawing.Size(95, 88);
-            this.buttonPackMove.TabIndex = 45;
-            this.buttonPackMove.Text = "Движения членов стаи";
-            this.buttonPackMove.UseVisualStyleBackColor = true;
-            // 
-            // buttonBestTitLeader
-            // 
-            this.buttonBestTitLeader.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonBestTitLeader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBestTitLeader.Location = new System.Drawing.Point(269, 122);
-            this.buttonBestTitLeader.Name = "buttonBestTitLeader";
-            this.buttonBestTitLeader.Size = new System.Drawing.Size(95, 88);
-            this.buttonBestTitLeader.TabIndex = 46;
-            this.buttonBestTitLeader.Text = "Нахождение наилучших позиций синиц и вожака";
-            this.buttonBestTitLeader.UseVisualStyleBackColor = true;
-            // 
             // button6
             // 
+            this.button6.Enabled = false;
             this.button6.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Location = new System.Drawing.Point(269, 255);
@@ -331,9 +310,11 @@
             this.button6.TabIndex = 49;
             this.button6.Text = "Проверка заполнения матрицы памяти";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
+            this.button7.Enabled = false;
             this.button7.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Location = new System.Drawing.Point(150, 255);
@@ -342,9 +323,11 @@
             this.button7.TabIndex = 48;
             this.button7.Text = "Нахождение нового положения вожака";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
+            this.button8.Enabled = false;
             this.button8.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Location = new System.Drawing.Point(31, 255);
@@ -353,9 +336,11 @@
             this.button8.TabIndex = 47;
             this.button8.Text = "Реализация перелетов остальных членов стаи";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // buttonEndCondition
             // 
+            this.buttonEndCondition.Enabled = false;
             this.buttonEndCondition.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonEndCondition.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEndCondition.Location = new System.Drawing.Point(269, 394);
@@ -364,9 +349,11 @@
             this.buttonEndCondition.TabIndex = 51;
             this.buttonEndCondition.Text = "Проверка условий завершения";
             this.buttonEndCondition.UseVisualStyleBackColor = true;
+            this.buttonEndCondition.Click += new System.EventHandler(this.buttonEndCondition_Click);
             // 
             // buttonNewGeneraton
             // 
+            this.buttonNewGeneraton.Enabled = false;
             this.buttonNewGeneraton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonNewGeneraton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNewGeneraton.Location = new System.Drawing.Point(31, 394);
@@ -375,9 +362,11 @@
             this.buttonNewGeneraton.TabIndex = 50;
             this.buttonNewGeneraton.Text = "Генерация новой стаи";
             this.buttonNewGeneraton.UseVisualStyleBackColor = true;
+            this.buttonNewGeneraton.Click += new System.EventHandler(this.buttonNewGeneraton_Click);
             // 
             // buttonResult
             // 
+            this.buttonResult.Enabled = false;
             this.buttonResult.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
             this.buttonResult.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonResult.Location = new System.Drawing.Point(269, 500);
@@ -448,8 +437,6 @@
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.buttonBestTitLeader);
-            this.Controls.Add(this.buttonPackMove);
             this.Controls.Add(this.buttonBestLeader);
             this.Controls.Add(this.buttonInitalGeneration);
             this.Controls.Add(this.label4);
@@ -498,8 +485,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.Button buttonInitalGeneration;
         private System.Windows.Forms.Button buttonBestLeader;
-        private System.Windows.Forms.Button buttonPackMove;
-        private System.Windows.Forms.Button buttonBestTitLeader;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
