@@ -11,6 +11,7 @@ namespace AIS
         public double fitness = 0;
         public Tit best;
         public Tit local_best;
+        public int dim;
 
         public Tit(int dim)
         {
@@ -21,6 +22,16 @@ namespace AIS
             for (int i = 0; i < dim; i++)
                 coords[i] = 0;
             fitness = 0;
+            this.dim = dim;
+        }
+
+        public Tit(Tit previousTit) 
+        {
+            coords = new Vector(previousTit.coords);
+            fitness = previousTit.fitness;
+            best = new Tit(previousTit.best);
+            local_best = new Tit(previousTit.local_best);
+            dim = previousTit.dim;
         }
     }
 }
