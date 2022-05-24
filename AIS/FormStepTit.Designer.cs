@@ -44,7 +44,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonNIter = new System.Windows.Forms.Button();
             this.numericUpDownN = new System.Windows.Forms.NumericUpDown();
@@ -64,7 +64,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartGraph)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -179,7 +179,7 @@
             this.label2.TabIndex = 37;
             this.label2.Text = "Графическое изображение популяции и линий уровня функции ";
             // 
-            // chart1
+            // chartGraph
             // 
             chartArea1.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.SharpTriangle;
             chartArea1.AxisX.IsLabelAutoFit = false;
@@ -203,10 +203,10 @@
             chartArea1.Position.Width = 94F;
             chartArea1.Position.X = 5F;
             chartArea1.Position.Y = 3F;
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Location = new System.Drawing.Point(388, 48);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            this.chartGraph.ChartAreas.Add(chartArea1);
+            this.chartGraph.Location = new System.Drawing.Point(388, 48);
+            this.chartGraph.Name = "chartGraph";
+            this.chartGraph.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -219,11 +219,11 @@
             series2.Color = System.Drawing.Color.Green;
             series2.Legend = "Legend1";
             series2.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(348, 410);
-            this.chart1.TabIndex = 38;
-            this.chart1.Text = "chart1";
+            this.chartGraph.Series.Add(series1);
+            this.chartGraph.Series.Add(series2);
+            this.chartGraph.Size = new System.Drawing.Size(348, 410);
+            this.chartGraph.TabIndex = 38;
+            this.chartGraph.Text = "chartGraph";
             // 
             // label3
             // 
@@ -443,7 +443,7 @@
             this.Controls.Add(this.numericUpDownN);
             this.Controls.Add(this.buttonNIter);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.chartGraph);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
@@ -456,7 +456,7 @@
             this.Text = "Метод стаи синиц. Работа по шагам";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartGraph)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -476,7 +476,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartGraph;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonNIter;
         private System.Windows.Forms.NumericUpDown numericUpDownN;
