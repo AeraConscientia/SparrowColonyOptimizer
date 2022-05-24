@@ -138,10 +138,15 @@ namespace AIS
             //
             //if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             //{
-            bitmap.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
-            chart1.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
             //}
             // TODO: Добавить в названия итерацию
+            bitmap.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
+            chartGraph.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
+
+            Bitmap bitmapChart = new Bitmap(chartGraph.Width, chartGraph.Height);
+            bitmapChart.SetResolution(300, 300);
+            chartGraph.DrawToBitmap(bitmapChart, chartGraph.ClientRectangle);
+            bitmapChart.Save($"Fitness.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -283,9 +288,9 @@ namespace AIS
             }
 
             pictureBox1.Refresh();
-            chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
-            chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
-            chart1.Refresh();
+            chartGraph.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+            chartGraph.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
+            chartGraph.Refresh();
 
             iterationGraph++;
         }
