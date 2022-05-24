@@ -302,10 +302,10 @@ namespace AIS
                     double val = algo.I[0].coords[j] + algo.r * (-0.5 * (algo.D[j, 1] + algo.D[j, 0]) + ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]));
 
                     if (val < algo.D[j, 0])
-                        val = (algo.best.coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
+                        val = (algo.I[0].coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
 
                     if (val > algo.D[j, 1])
-                        val = (algo.D[j, 1] - algo.best.coords[j]) * algo.random.NextDouble() + algo.best.coords[j];
+                        val = (algo.D[j, 1] - algo.I[0].coords[j]) * algo.random.NextDouble() + algo.I[0].coords[j];
 
                     algo.I[i].coords[j] = val;
                 }

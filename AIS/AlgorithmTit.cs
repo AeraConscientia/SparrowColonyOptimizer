@@ -144,10 +144,10 @@ namespace AIS
                         double val = I[0].coords[j] + r * (-0.5 * (D[j, 1] + D[j, 0]) + ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]));
 
                         if (val < D[j, 0])
-                            val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
+                            val = (I[0].coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
 
                         if (val > D[j, 1])
-                            val = (D[j, 1] - best.coords[j]) * random.NextDouble() + best.coords[j];
+                            val = (D[j, 1] - I[0].coords[j]) * random.NextDouble() + I[0].coords[j];
 
                         I[i].coords[j] = val;
                     }
