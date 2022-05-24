@@ -117,7 +117,7 @@ namespace AIS
                     {
                         for (int j = 0; j < dim; j++)
                         {
-                            double val = best.coords[j] - 0.5*(D[j,1] + D[j,0]) + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
+                            double val = best.coords[j] + r * (-0.5 * (D[j, 1] + D[j, 0]) + ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]));
 
                             if (val < D[j, 0]) 
                                 val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];
@@ -141,7 +141,7 @@ namespace AIS
                 {
                     for (int j = 0; j < dim; j++)
                     {
-                        double val = I[0].coords[j] - 0.5*(D[j,1] + D[j,0]) + r * ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]);
+                        double val = I[0].coords[j] + r * (-0.5 * (D[j, 1] + D[j, 0]) + ((D[j, 1] - D[j, 0]) * random.NextDouble() + D[j, 0]));
 
                         if (val < D[j, 0])
                             val = (best.coords[j] - D[j, 0]) * random.NextDouble() + D[j, 0];

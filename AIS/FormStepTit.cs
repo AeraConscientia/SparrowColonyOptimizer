@@ -235,11 +235,11 @@ namespace AIS
             {
                 for (int j = 0; j < algo.dim; j++)
                 {
-                    double val = algo.best.coords[j] - 0.5 * (algo.D[j, 1] + algo.D[j, 0]) + algo.r * ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]);
+                    double val = algo.best.coords[j] + algo.r * (-0.5 * (algo.D[j, 1] + algo.D[j, 0]) + ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]));
 
                     if (val < algo.D[j, 0])
                         val = (algo.best.coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
-
+                
                     if (val > algo.D[j, 1])
                         val = (algo.D[j, 1] - algo.best.coords[j]) * algo.random.NextDouble() + algo.best.coords[j];
 
@@ -299,7 +299,7 @@ namespace AIS
             {
                 for (int j = 0; j < algo.dim; j++)
                 {
-                    double val = algo.I[0].coords[j] - 0.5 * (algo.D[j, 1] + algo.D[j, 0]) + algo.r * ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]);
+                    double val = algo.I[0].coords[j] + algo.r * (-0.5 * (algo.D[j, 1] + algo.D[j, 0]) + ((algo.D[j, 1] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0]));
 
                     if (val < algo.D[j, 0])
                         val = (algo.best.coords[j] - algo.D[j, 0]) * algo.random.NextDouble() + algo.D[j, 0];
