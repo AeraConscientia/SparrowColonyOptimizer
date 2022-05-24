@@ -133,6 +133,16 @@ namespace AIS.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SchoolColor1 {
+            get {
+                object obj = ResourceManager.GetObject("SchoolColor1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SkinMin {
             get {
                 object obj = ResourceManager.GetObject("SkinMin", resourceCulture);

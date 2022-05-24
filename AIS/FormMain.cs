@@ -549,7 +549,7 @@ namespace AIS
             p10.EndCap = LineCap.ArrowAnchor;
             e.Graphics.DrawLine(p10, 0, h - a, w - 10, h - a);
             e.Graphics.DrawLine(p10, a, h, a, 0);
-            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 11);
+            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 11+1);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
         }
 

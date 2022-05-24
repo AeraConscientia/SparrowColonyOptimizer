@@ -129,10 +129,18 @@ namespace AIS
         /// <summary>Сохранение графика приспособленности и положения стаи</summary>
         private void buttonSavePictures_Click(object sender, EventArgs e)
         {
-            
+            Bitmap bitmap = new Bitmap(pictureBox2.Width, pictureBox2.Height);
+            bitmap.SetResolution(300, 300); // dpi
+            pictureBox2.DrawToBitmap(bitmap, pictureBox2.ClientRectangle);
+
+            //SaveFileDialog sfd = new SaveFileDialog();
+            ////sfd.Filter = "jpg|*.jpg|gif|*.gif|bmp|*.bmp|png|*.png|tiff|*.tiff";
+            //
+            //if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            bitmap.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
             chart1.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
-            if (pictureBox2.Image != null)
-                pictureBox2.Image.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //pictureBox2.Image.Save($"Iteration{Iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+            //}
             // TODO: Добавить в названия итерацию
         }
 
@@ -328,71 +336,6 @@ namespace AIS
             Pen pRed   = new Pen(Color.Red, 2);
             Font f1    = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
-        // 1-2 шаги
-            e.Graphics.DrawLine(pBlack, 66, 77, 66, 110);
-            e.Graphics.DrawLine(pBlack, 65, 105, 60, 96); // левая стрелочка
-            e.Graphics.DrawLine(pBlack, 66, 105, 71, 96); // правая стрелочка
-
-        // 2-3 шаги
-            e.Graphics.DrawLine(pBlack, 112, 152, 137, 152);
-            e.Graphics.DrawLine(pBlack, 133, 151, 124, 146); // верхняя стрелочка
-            e.Graphics.DrawLine(pBlack, 133, 152, 124, 157); // нижняя стрелочка
-            
-            //if ()
-            //{
-            //    e.Graphics.DrawLine(pRed, 112, 152, 137, 152);
-            //    e.Graphics.DrawLine(pRed, 133, 151, 124, 146); // верхняя стрелочка
-            //    e.Graphics.DrawLine(pRed, 133, 152, 124, 157); // нижняя стрелочка
-            //}
-
-        // 3-4 шаги
-            e.Graphics.DrawLine(pBlack, 231, 152, 257, 152);
-            e.Graphics.DrawLine(pBlack, 252, 151, 243, 146); // верхняя стрелочка
-            e.Graphics.DrawLine(pBlack, 252, 152, 243, 157); // нижняя стрелочка
-
-            //if ()
-            //{
-            //    e.Graphics.DrawLine(pRed, 231, 152, 257, 152);
-            //    e.Graphics.DrawLine(pRed, 252, 151, 243, 146); // верхняя стрелочка
-            //    e.Graphics.DrawLine(pRed, 252, 152, 243, 157); // нижняя стрелочка
-            //}
-
-        // 4-6 шаги
-            e.Graphics.DrawLine(pBlack, 304, 196, 304, 245);
-            e.Graphics.DrawLine(pBlack, 303, 239, 298, 230); // левая стрелочка
-            e.Graphics.DrawLine(pBlack, 304, 239, 309, 230); // правая стрелочка
-
-            //if ()
-            //{
-            //    e.Graphics.DrawLine(pRed, 304, 196, 304, 245);
-            //    e.Graphics.DrawLine(pRed, 303, 239, 298, 230); // левая стрелочка
-            //    e.Graphics.DrawLine(pRed, 304, 239, 309, 230); // правая стрелочка
-            //}
-
-        // 6-8 шаги
-            e.Graphics.DrawLine(pBlack, 231, 287, 257, 287);
-            e.Graphics.DrawLine(pBlack, 231, 286, 240, 291); // верхняя стрелочка
-            e.Graphics.DrawLine(pBlack, 231, 287, 240, 282); // нижняя стрелочка
-
-            //if ()
-            //{
-            //    e.Graphics.DrawLine(pRed, 231, 287, 257, 287);
-            //    e.Graphics.DrawLine(pRed, 231, 286, 240, 291); // верхняя стрелочка
-            //    e.Graphics.DrawLine(pRed, 231, 287, 240, 282); // нижняя стрелочка
-            //}
-
-        // 8-9 шаги
-            e.Graphics.DrawLine(pBlack, 112, 287, 137, 287);
-            e.Graphics.DrawLine(pBlack, 112, 286, 121, 291); // верхняя стрелочка
-            e.Graphics.DrawLine(pBlack, 112, 287, 121, 282); // нижняя стрелочка
-
-            //if ()
-            //{
-            //    e.Graphics.DrawLine(pRed, 112, 287, 137, 287);
-            //    e.Graphics.DrawLine(pRed, 112, 286, 121, 291); // верхняя стрелочка
-            //    e.Graphics.DrawLine(pRed, 112, 287, 121, 282); // нижняя стрелочка
-            //}
-
         // 9-2 шаги
             e.Graphics.DrawLine(pBlack, 66, 196, 66, 240);
             e.Graphics.DrawLine(pBlack, 65, 197, 60, 206); // левая стрелочка
@@ -456,6 +399,56 @@ namespace AIS
             //    e.Graphics.DrawLine(pRed, 15, 151, 6, 146); // верхняя стрелочка
             //    e.Graphics.DrawLine(pRed, 15, 152, 6, 157); // нижняя стрелочка
             //}
+
+        // 8-9 шаги
+            e.Graphics.DrawLine(pBlack, 112, 287, 137, 287);
+            e.Graphics.DrawLine(pBlack, 112, 286, 121, 291); // верхняя стрелочка
+            e.Graphics.DrawLine(pBlack, 112, 287, 121, 282); // нижняя стрелочка
+
+            //if (Red[3] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 112, 287, 137, 287);
+            //    e.Graphics.DrawLine(pRed, 112, 286, 121, 291); // верхняя стрелочка
+            //    e.Graphics.DrawLine(pRed, 112, 287, 121, 282); // нижняя стрелочка
+            //}
+
+            // 6-8 шаги
+            e.Graphics.DrawLine(pBlack, 231, 287, 257, 287);
+            e.Graphics.DrawLine(pBlack, 231, 286, 240, 291); // верхняя стрелочка
+            e.Graphics.DrawLine(pBlack, 231, 287, 240, 282); // нижняя стрелочка
+
+            //if (Red[2] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 231, 287, 257, 287);
+            //    e.Graphics.DrawLine(pRed, 231, 286, 240, 291); // верхняя стрелочка
+            //    e.Graphics.DrawLine(pRed, 231, 287, 240, 282); // нижняя стрелочка
+            //}
+
+            // 4-6 шаги
+            e.Graphics.DrawLine(pBlack, 304, 196, 304, 245);
+            e.Graphics.DrawLine(pBlack, 303, 239, 298, 230); // левая стрелочка
+            e.Graphics.DrawLine(pBlack, 304, 239, 309, 230); // правая стрелочка
+
+            //if (Red[1] == true)
+            //{
+            //    e.Graphics.DrawLine(pRed, 304, 196, 304, 245);
+            //    e.Graphics.DrawLine(pRed, 303, 239, 298, 230); // левая стрелочка
+            //    e.Graphics.DrawLine(pRed, 304, 239, 309, 230); // правая стрелочка
+            //}
+
+        // 1-2 шаги
+            e.Graphics.DrawLine(pBlack, 66, 77, 66, 110);
+            e.Graphics.DrawLine(pBlack, 65, 105, 60, 96); // левая стрелочка
+            e.Graphics.DrawLine(pBlack, 66, 105, 71, 96); // правая стрелочка
+
+            //if (Red[0] == true)
+            //{
+            //    e.Graphics.DrawLine(pBlack, 66, 77, 66, 110);
+            //    e.Graphics.DrawLine(pBlack, 65, 105, 60, 96); // левая стрелочка
+            //    e.Graphics.DrawLine(pBlack, 66, 105, 71, 96); // правая стрелочка
+            //}
+
+        
         }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
@@ -605,7 +598,7 @@ namespace AIS
             e.Graphics.DrawLine(p10, a, 0, a + 5, 10);
             e.Graphics.DrawLine(p10, w - 5, h - a, w - 15, h - a - 5);
             e.Graphics.DrawLine(p10, w - 5, h - a, w - 15, h - a + 5);
-            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5);
+            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5 + 7);
             e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
 
         }
