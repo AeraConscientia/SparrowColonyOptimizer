@@ -87,18 +87,22 @@ namespace AIS
             dataGridView1.RowCount = 2;
             dataGridView1.Rows[0].Cells[0].Value = "x";
             dataGridView1.Rows[1].Cells[0].Value = "y";
+            for (int i = 0; i < 2; i++)
+            {
+                dataGridView1.Rows[i].Cells[0].Style.Font = new Font("Times New Roman", 11, FontStyle.Italic);
+            }
 
             dataGridView2.RowCount = 13;
-            dataGridView2.Rows[0].Cells[0].Value = "Размер популяции";
+            dataGridView2.Rows[0].Cells[0].Value = "NP";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "ϒ"; 
+            dataGridView2.Rows[1].Cells[0].Value = "γ";
             dataGridView2.Rows[1].Cells[1].Value = 0.75.ToString();
 
             dataGridView2.Rows[2].Cells[0].Value = "η";
             dataGridView2.Rows[2].Cells[1].Value = 0.9.ToString();
 
-            dataGridView2.Rows[3].Cells[0].Value = "Радиус окрестности ро";
+            dataGridView2.Rows[3].Cells[0].Value = "ρ";
             dataGridView2.Rows[3].Cells[1].Value = 5;
 
             dataGridView2.Rows[4].Cells[0].Value = "c1";
@@ -110,7 +114,7 @@ namespace AIS
             dataGridView2.Rows[6].Cells[0].Value = "c3";
             dataGridView2.Rows[6].Cells[1].Value = 5;
 
-            dataGridView2.Rows[7].Cells[0].Value = "Матрица памяти K";
+            dataGridView2.Rows[7].Cells[0].Value = "K";
             dataGridView2.Rows[7].Cells[1].Value = 10;
 
             dataGridView2.Rows[8].Cells[0].Value = "h";
@@ -128,6 +132,31 @@ namespace AIS
             dataGridView2.Rows[12].Cells[0].Value = "ε";
             dataGridView2.Rows[12].Cells[1].Value = 0.000000001.ToString();
 
+            for (int i = 0; i < 12; i++)
+            {
+                switch(i)
+                {
+                    case 0:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        dataGridView2.Rows[i].Cells[0].Style.Font = new Font("Times New Roman", 11, FontStyle.Italic);
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 11:
+                    case 12:
+                        dataGridView2.Rows[i].Cells[0].Style.Font = new Font("Times New Roman", 11);
+                        break;
+                }
+                
+            }
+
             //СТАРОЕ
 
             dataGridView3.RowCount = 4;
@@ -135,6 +164,10 @@ namespace AIS
             dataGridView3.Rows[1].Cells[0].Value = "y";
             dataGridView3.Rows[2].Cells[0].Value = "f*";
             dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
+            for (int i = 0; i < 3; i++)
+            {
+                dataGridView3.Rows[i].Cells[0].Style.Font = new Font("Times New Roman", 11, FontStyle.Italic);
+            }
 
             dataGridView4.RowCount = 2;
             dataGridView4.Rows[0].Cells[0].Value = "λ";//"Параметр распределения";
@@ -142,6 +175,11 @@ namespace AIS
 
             dataGridView4.Rows[1].Cells[0].Value = "α";
             dataGridView4.Rows[1].Cells[1].Value = (0.001).ToString();
+
+            for (int i = 0; i < 2; i++)
+            {
+                dataGridView4.Rows[i].Cells[0].Style.Font = new Font("Times New Roman", 11);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -619,6 +657,7 @@ namespace AIS
 
         private void button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
             {
                 if (dataGridView1.Rows[0].Cells[1].Value != null &&
                     dataGridView1.Rows[0].Cells[2].Value != null &&
@@ -719,6 +758,7 @@ namespace AIS
                 else
                     MessageBox.Show("Введите корректные параметры", "Ошибка при запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            button2.Enabled = true;
         }
     }
 }
