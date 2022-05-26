@@ -140,7 +140,7 @@ namespace AIS
             //{
             //}
             // TODO: Добавить в названия итерацию
-            bitmap.Save($"Iteration.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
+            bitmap.Save($"Iteration{p}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
             chartGraph.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
 
             Bitmap bitmapChart = new Bitmap(chartGraph.Width, chartGraph.Height);

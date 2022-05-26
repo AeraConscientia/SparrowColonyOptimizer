@@ -614,7 +614,7 @@ namespace AIS
         /// <summary>Вызов pdf файла с алгоритмом</summary>
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("HelpPerchMethod.pdf"); // TODO: сделать pdf синиц и заменить
+            Process.Start("TomtitFlockOptimization.pdf");
         }
 
         private void button1_Click_1(object sender, EventArgs e)

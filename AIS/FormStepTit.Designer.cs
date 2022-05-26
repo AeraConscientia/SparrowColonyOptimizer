@@ -397,7 +397,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox3.Image = global::AIS.Properties.Resources.SchoolColor1;
+            this.pictureBox3.Image = global::AIS.Properties.Resources.SchoolColor_Steps;
             this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
             this.pictureBox3.Location = new System.Drawing.Point(758, 563);
             this.pictureBox3.Name = "pictureBox3";
