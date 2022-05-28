@@ -37,6 +37,7 @@ namespace AIS
             this.P = P;
             this.mu = mu;
             this.eps = eps;
+            this.exact = exact;
         }
 
         public int NP;
