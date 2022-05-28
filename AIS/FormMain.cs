@@ -693,7 +693,7 @@ namespace AIS
 
                         eps = Convert.ToDouble(dataGridView2.Rows[12].Cells[1].Value);
 
-                        for (int p = 0; p < 1; p++)
+                        for (int p = 0; p < 3; p++)
                         {          
                             List<double> averFuncDeviation = new List<double>();
                             double minDeviation = 0;
