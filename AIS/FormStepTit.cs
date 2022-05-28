@@ -194,6 +194,7 @@ namespace AIS
                 algo.Pool.Add(new Tit(algo.memory.OrderBy(t => t.fitness).ToList()[0]));       //Шаг 2.7 K=k
                 Red[6] = true;
                 buttonEndCondition.Enabled = true;
+                buttonNIter.Enabled = true;
             }
             else
             {
@@ -362,7 +363,40 @@ namespace AIS
 
         private void buttonNIter_Click(object sender, EventArgs e)
         {
+            int N = (int)numericUpDownN.Value;
+            int potentialN = p + N;
 
+            if (Red[1])
+            {
+                while (k < algo.K)
+                {
+                    buttonBestLeader_Click(sender, e);
+                    button6_Click(sender, e);
+                    button7_Click(sender, e);
+                    button8_Click(sender, e);
+                }
+                buttonBestLeader_Click(sender, e);
+                button6_Click(sender, e);
+            }
+            if (Red[6]) 
+            {
+                while (p < Math.Min(potentialN, P))
+                {
+                    buttonEndCondition_Click(sender, e);
+                    buttonNewGeneraton_Click(sender, e);
+
+                    while (k < algo.K)
+                    {
+                        buttonBestLeader_Click(sender, e);
+                        button6_Click(sender, e);
+                        button7_Click(sender, e);
+                        button8_Click(sender, e);
+                    }
+                    buttonBestLeader_Click(sender, e);
+                    button6_Click(sender, e);
+                }
+                
+            }
         }
 
         /// <summary>Отрисовка стрелочек</summary>
