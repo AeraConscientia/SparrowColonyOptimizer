@@ -43,6 +43,7 @@ namespace AIS
         public Tit StartAlg(int NP, double alpha, double gamma, double lambda, double eta, double rho, double c1, double c2, double c3,
             double K, double h, double L, double P, double mu, double eps, double[,] D, int f) 
         {
+            Function.calls = 0;
             //Шаг 1.1
             this.NP = NP;
             this.alpha = alpha;
@@ -155,6 +156,7 @@ namespace AIS
                     I[i].fitness = Function.function(I[i].coords[0], I[i].coords[1], f);
                 }
             }
+            Console.WriteLine("Число подсчетов целевой функции: " + Function.calls);
             return Pool.OrderBy(t => t.fitness).ToList()[0];        //Шаг 4
         }
 

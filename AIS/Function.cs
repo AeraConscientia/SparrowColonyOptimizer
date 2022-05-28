@@ -8,8 +8,11 @@ namespace AIS
 {
     public static class Function
     {
+        public static int calls = 0;
         public static float function(double x1, double x2, int f)
         {
+            calls++;
+
             float funct = 0;
             if (f == 0) // Швефель
             {
