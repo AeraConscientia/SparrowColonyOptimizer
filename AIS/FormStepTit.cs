@@ -369,12 +369,8 @@ namespace AIS
             if (Red[1])
             {
                 while (k < algo.K)
-                {
-                    buttonBestLeader_Click(sender, e);
-                    button6_Click(sender, e);
-                    button7_Click(sender, e);
-                    button8_Click(sender, e);
-                }
+                    InnerCycle(sender, e);
+
                 buttonBestLeader_Click(sender, e);
                 button6_Click(sender, e);
             }
@@ -386,12 +382,8 @@ namespace AIS
                     buttonNewGeneraton_Click(sender, e);
 
                     while (k < algo.K)
-                    {
-                        buttonBestLeader_Click(sender, e);
-                        button6_Click(sender, e);
-                        button7_Click(sender, e);
-                        button8_Click(sender, e);
-                    }
+                        InnerCycle(sender, e);
+
                     buttonBestLeader_Click(sender, e);
                     button6_Click(sender, e);
                 }
@@ -399,6 +391,13 @@ namespace AIS
             }
         }
 
+        private void InnerCycle(object sender, EventArgs e) 
+        {
+            buttonBestLeader_Click(sender, e);
+            button6_Click(sender, e);
+            button7_Click(sender, e);
+            button8_Click(sender, e);
+        }
         /// <summary>Отрисовка стрелочек</summary>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
