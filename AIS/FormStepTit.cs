@@ -155,6 +155,15 @@ namespace AIS
             buttonAnswer.Enabled = false;
             flag = false;
             algo.best = new Tit(algo.Pool.OrderBy(t => t.fitness).ToList()[0]);
+
+            dataGridView3.RowCount = 3;
+            dataGridView3.Rows[0].Cells[0].Value = "Положение лучшей синицы";
+            dataGridView3.Rows[1].Cells[0].Value = "f*";
+            dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
+
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+            dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
         }
 
         private void buttonBestLeader_Click(object sender, EventArgs e)
@@ -271,10 +280,11 @@ namespace AIS
             algo.bestFitness.Add(algo.Pool.OrderBy(t=>t.fitness).ToList()[0].fitness);
             algo.AverageFitness();
 
-            if (p >= algo.P)
+            if (p+1 >= algo.P)
             {
                 Red[8] = true;
                 buttonResult.Enabled = true;
+                ++p;
             }
             else 
             {
@@ -286,6 +296,27 @@ namespace AIS
                 algo.memory = new List<Tit>();
                 ++p;
             }
+
+            dataGridView3.RowCount = 5;
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[1].Cells[0].Value = "Положение лучшей синицы";
+            dataGridView3.Rows[2].Cells[0].Value = "f* лучшей синицы";
+            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
+
+            if (p+1 >= algo.P)
+            {
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{p}");
+            }
+            else
+            {
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{p}");
+            }
+
+            dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
+            dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
 
             pictureBox1.Refresh();
             chartGraph.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
