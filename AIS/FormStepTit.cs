@@ -364,7 +364,7 @@ namespace AIS
         private void buttonNIter_Click(object sender, EventArgs e)
         {
             int N = (int)numericUpDownN.Value;
-            int potentialN = p + N;
+            int potentialN = p + N - 2;
 
             if (Red[1])
             {
